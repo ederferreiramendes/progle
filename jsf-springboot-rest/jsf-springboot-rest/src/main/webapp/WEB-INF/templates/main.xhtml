@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title><ui:insert name="title">Aplicação</ui:insert></title>
+  <h:outputStylesheet library="webjars" name="primeflex/3.3.1/primeflex.min.css" />
+</h:head>
+<h:body styleClass="ui-fluid">
+  <div class="grid">
+    <div class="col-12">
+      <p:menubar>
+        <p:menuitem value="Home" outcome="/index.xhtml" icon="pi pi-home"/>
+        <p:menuitem value="Swagger" outcome="/swagger-ui/index.html" icon="pi pi-book"/>
+        <p:submenu label="Exemplos" icon="pi pi-list">
+          <p:menuitem value="Form" outcome="/index.xhtml"/>
+        </p:submenu>
+      </p:menubar>
+    </div>
+
+    <div class="col-12 md:col-10 md:col-offset-1 lg:col-8 lg:col-offset-2">
+      <ui:insert name="content">
+        <!-- Conteúdo padrão -->
+      </ui:insert>
+    </div>
+
+    <div class="col-12 text-center">
+      <p:divider/>
+      <small>
+        <ui:insert name="footer">© <h:outputText value="#{request.contextPath}" /> - <h:outputText value="#{now}"/></ui:insert>
+      </small>
+    </div>
+  </div>
+</h:body>
+</html>
