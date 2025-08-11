@@ -1,0 +1,14 @@
+# Maven
+target/
+.mvn/
+.idea/
+*.iml
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+
+# Node (se houver frontend)
+node_modules/
