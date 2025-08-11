@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+  <title>JSF + Spring Boot + PrimeFaces</title>
+</h:head>
+<h:body>
+  <h:form id="form">
+    <p:panel header="PrimeFaces Demo">
+      <p:messages id="msgs"/>
+      <p:outputLabel for="name" value="Seu nome:"/>
+      <p:inputText id="name" value="#{helloBean.name}"/>
+      <p:commandButton value="Dizer Olá"
+                       update="display msgs"
+                       process="@form"
+                       oncomplete="PF('dlg').show()"/>
+      <p:outputPanel id="display">
+        <h:outputText value="#{helloBean.greet()}"/>
+      </p:outputPanel>
+    </p:panel>
+
+    <p:dialog widgetVar="dlg" header="Saudação" modal="true" closable="true">
+      <h:outputText value="#{helloBean.greet()}"/>
+    </p:dialog>
+
+    <p:separator/>
+    <h:link outcome="/swagger-ui/index.html" value="Abrir Swagger UI"/>
+  </h:form>
+</h:body>
+</html>
