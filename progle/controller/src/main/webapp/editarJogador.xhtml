@@ -1,0 +1,273 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:custom="http://customjsf.consult.inf.br/facelets/taglibs"
+	xmlns:composite="http://java.sun.com/jsf/composite/componentes"
+	template="/templates/template.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="idJogador" value="#{cadastroJogadorBean.idJogador}" />
+		<f:event type="preRenderView"
+			listener="#{cadastroJogadorBean.buscarJogadorPorId}" />
+	</f:metadata>
+
+	<ui:define name="content">
+		<h:form id="formEditarJogador" class="tela-cadastro">
+			<h:panelGrid
+				style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+				
+				 <div class="img-login" style="text-align: center; margin-top: 20px;">
+                    <img src="#{request.contextPath}/resources/images/proogle_logo.png"
+                         alt="Logo da Empresa" width="30%" height="30%"
+                         class="h-16 object-contain" />
+                </div>
+				
+				
+				<h1>Editar informações do Jogador</h1>
+				
+				<p:accordionPanel activeIndex="-1">
+
+					<!-- Aba: Dados pessoais -->
+					<p:tab title="Dados pessoais">
+						<h:panelGrid id="painelCadastroJogador" columns="1"
+							class="painelCadastro"
+							style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+							
+							<pm:field>
+								<p:outputLabel for="cpf" value="CPF" />
+								<p:inputText id="cpf" required="true" placeholder="CPF *"
+									disabled="true" value="#{cadastroJogadorBean.novoJogador.cpf}"
+									validatorMessage="CPF inválido">
+									<f:validateRegex pattern="\d{11}" />
+								</p:inputText>
+								<p:message for="cpf" id="msgCpf" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="nome" value="Nome" />
+								<p:inputText id="nome" required="true" placeholder="Nome *"
+									value="#{cadastroJogadorBean.novoJogador.nome}" />
+								<p:message id="msgNome" for="nome" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="apelido" value="Apelido" />
+								<p:inputText id="apelido" required="true" placeholder="Apelido *"
+									value="#{cadastroJogadorBean.novoJogador.apelido}" />
+								<p:message id="msgApelido" for="apelido" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="contato" value="Whatsapp" />
+								<p:inputMask id="contato" required="true" mask="(99) 99999-9999"
+									value="#{cadastroJogadorBean.novoJogador.contato}" />
+								<p:message id="msgContato" for="contato" />
+							</pm:field>
+							
+							<pm:field>
+								<p:outputLabel for="instagram" value="Instagram" />
+								<p:inputText id="instagram"
+									placeholder="Instagram "
+									value="#{cadastroJogadorBean.novoJogador.instagram}" />
+								<p:message id="msgInstagram" for="instagram" />
+							</pm:field>									
+
+							<pm:field>
+								<p:outputLabel for="email" value="Email" />
+								<p:inputText id="email" required="true" placeholder="Email*"
+									value="#{cadastroJogadorBean.novoJogador.email}" />
+								<p:message for="email" id="msgEmail" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="sexo" value="Sexo" />
+								<p:selectOneRadio id="sexo" styleClass="custom-radio"
+									value="#{cadastroJogadorBean.novoJogador.sexo}" required="true">
+									<f:selectItems value="#{cadastroJogadorBean.sexoOptions}" />
+								</p:selectOneRadio>
+								<p:message for="sexo" id="msgSexo" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="dataNascimento" value="Data de Nascimento" />
+								<p:calendar id="dataNascimento" required="true"
+									value="#{cadastroJogadorBean.novoJogador.dataNascimento}"
+									pattern="dd/MM/yyyy" navigator="true" locale="pt_BR"
+									placeholder="Data *">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:calendar>
+								<p:message for="dataNascimento" id="msgDataNascimento" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="nivel" value="Nivel" />
+								<p:selectOneRadio id="nivel" styleClass="custom-radio"
+									value="#{cadastroJogadorBean.novoJogador.nivel}" required="true">
+									<f:selectItem itemLabel="Amador" itemValue="AMADOR" />
+									<f:selectItem itemLabel="Semi-profissional"
+										itemValue="SEMIPROFISSIONAL" />
+								</p:selectOneRadio>
+								<p:message for="nivel" id="msgNivel" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="valorAluguel" value="Valor do aluguel" />
+								<p:inputText id="valorAluguel" required="true"
+									placeholder="Valor do aluguel*"
+									value="#{cadastroJogadorBean.novoJogador.valorAluguel}" />
+								<p:message for="valorAluguel" id="msgValorAluguel" />
+							</pm:field>
+						</h:panelGrid>
+					</p:tab>
+
+					<!-- Aba: Endereço -->
+					<p:tab title="Endereço">
+						<h:panelGrid id="painelCadastroEndereco" columns="1"
+							style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+							
+							<pm:field>
+								<p:outputLabel for="cep" value="CEP" />
+								<p:inputMask id="cep" required="true" placeholder="CEP *" mask="99999-999"
+									value="#{cadastroJogadorBean.novoJogador.enderecoDTO.cep}"
+									validatorMessage="CEP inválido">
+									<p:ajax event="blur"
+										listener="#{cadastroJogadorBean.carregarEnderecoPorCep}"
+										update="painelCadastroEndereco" process="@this" />
+								</p:inputMask>
+								<p:message id="msgCep" for="cep" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="estado" value="Estado" />
+								<p:selectOneMenu id="estado" label="Selecione os Estados"
+									value="#{cadastroJogadorBean.novoJogador.enderecoDTO.estado}"
+									styleClass="custom-select">
+									<f:selectItem itemLabel="SP" itemValue="SP" />
+								</p:selectOneMenu>
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="cidade" value="Cidade" />
+								<p:inputText id="cidade" required="true" placeholder="Cidade *"
+									value="#{cadastroJogadorBean.novoJogador.enderecoDTO.cidade}" />
+								<p:message for="cidade" id="msgCidade" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="bairro" value="Bairro" />
+								<p:inputText id="bairro" required="true" placeholder="Bairro *"
+									value="#{cadastroJogadorBean.novoJogador.enderecoDTO.bairro}" />
+								<p:message for="bairro" id="msgBairro" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="rua" value="Rua" />
+								<p:inputText id="rua" required="true" placeholder="Rua *"
+									value="#{cadastroJogadorBean.novoJogador.enderecoDTO.rua}" />
+								<p:message for="rua" id="msgRua" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="numero" value="Numero" />
+								<p:inputText id="numero" required="true" placeholder="Numero *"
+									value="#{cadastroJogadorBean.novoJogador.enderecoDTO.numero}" />
+								<p:message for="numero" id="msgNumero" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="complemento" value="Complemento" />
+								<p:inputText id="complemento" placeholder="Complemento "
+									value="#{cadastroJogadorBean.novoJogador.enderecoDTO.complemento}" />
+								<p:message for="complemento" id="msgComplemento" />
+							</pm:field>
+						</h:panelGrid>
+					</p:tab>
+
+					<!-- Aba: Histórico -->
+					<p:tab title="Histórico">
+						<h:panelGrid id="painelCadastroHistorico" columns="1"
+							style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+							<pm:field>
+								<p:outputLabel for="historico" value="Histórico"
+									styleClass="label-historico" />
+								<p:inputTextarea id="historico" placeholder="Histórico"
+									value="#{cadastroJogadorBean.novoJogador.historico}" rows="5"
+									cols="50" />
+								<p:message id="msgHistorico" for="historico" />
+							</pm:field>
+						</h:panelGrid>
+					</p:tab>
+
+					<!-- Aba: Foto -->
+					<p:tab title="Foto">
+						<h:panelGrid id="painelUpload" columns="1"
+							styleClass="centralizado"
+							style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+							<pm:field>
+								<div class="upload-container">
+									<p:outputLabel for="foto" value="Envie uma foto:"
+										styleClass="label-upload" />
+									<p:fileUpload id="foto" mode="simple" skinSimple="true"
+										label="Escolher arquivo" class="button-foto" />
+								</div>
+							</pm:field>
+						</h:panelGrid>
+					</p:tab>
+
+					<!-- Aba: Modalidades -->
+					<p:tab title="Modalidades">
+						<h:panelGrid columns="1"
+							style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+							<pm:field>
+								<p:outputLabel for="modalidade" value="Selecione as Modalidades: *"
+									style="text-align: center; display: block; width: 100%;" />
+								<p:selectManyCheckbox id="modalidade"
+									value="#{cadastroJogadorBean.novoJogador.modalidade}"
+									styleClass="custom-checkbox">
+									<f:selectItems
+										value="#{cadastroJogadorBean.getModalidadeOptions()}" />
+								</p:selectManyCheckbox>
+								<p:message for="modalidade" id="msgModalidade" />
+							</pm:field>
+						</h:panelGrid>
+					</p:tab>
+
+					<!-- Aba: Dados bancários -->
+					<p:tab title="Dados bancários">
+						<h:panelGrid columns="1"
+							style="text-align: left; border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+							<pm:field>
+								<p:outputLabel for="tipoChavePix" value="Tipo de Chave Pix"
+									style="text-align: center; display: block; margin-bottom: 10px;" />
+
+								<p:selectOneMenu id="tipoChavePix"
+									label="Selecione o Tipo de Chave Pix"
+									value="#{cadastroJogadorBean.novoJogador.dadosBancariosDTO.tipoChavePix}"
+									styleClass="custom-select-pix">
+									<f:selectItems value="#{cadastroJogadorBean.getTiposChavePix()}"
+										var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
+								</p:selectOneMenu>
+
+								<p:inputText id="chavePixInput" required="true"
+									placeholder="Chave Pix *"
+									value="#{cadastroJogadorBean.novoJogador.dadosBancariosDTO.chavePix}"
+									styleClass="custom-input" />
+							</pm:field>
+						</h:panelGrid>
+					</p:tab>
+
+				</p:accordionPanel>
+
+				<!-- Botão Final -->
+				<p:commandButton id="btnEditarJogador" value="Salvar"
+					action="#{cadastroJogadorBean.editar}" update="@form"
+					styleClass="botao-entar" icon="fa fa-user-plus" />
+			</h:panelGrid>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

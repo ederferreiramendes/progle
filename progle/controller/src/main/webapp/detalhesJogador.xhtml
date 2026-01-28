@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    template="/templates/template.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="idJogador" value="#{aluguelJogadorBean.idJogador}" />
+        <f:event type="preRenderView" listener="#{aluguelJogadorBean.buscarJogadorPorId()}" />
+    </f:metadata>
+
+    <ui:define name="content">
+        <h:form id="jogadorProfileForm" style="max-width: 600px; margin: auto; padding: 15px;">
+
+            <!-- Cabeçalho -->
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img src="http://#{request.serverName}/progle/fotos/#{aluguelJogadorBean.jogadorDTO.fotoCaminho}"
+                    alt="Foto do Jogador"
+                    style="width: 120px; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;" />
+                <h2 style="margin: 5px 0; font-size: 20px; font-weight: bold;">
+                    #{aluguelJogadorBean.jogadorDTO.nome}
+                </h2>
+                <p style="margin: 0; font-size: 16px; color: #555;">
+                    Apelido: #{aluguelJogadorBean.jogadorDTO.apelido}
+                </p>
+            </div>
+
+            <!-- Bloco de informações -->
+            <div class="profile-card">
+                <h3>Informações Pessoais</h3>
+                <p><strong>CPF:</strong> #{aluguelJogadorBean.jogadorDTO.cpf}</p>
+                <p><strong>Sexo:</strong> #{aluguelJogadorBean.jogadorDTO.sexo}</p>
+                <p><strong>Data de Nascimento:</strong>
+                    <h:outputText value="#{aluguelJogadorBean.jogadorDTO.dataNascimento}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p>
+                <p rendered="#{not empty aluguelJogadorBean.jogadorDTO.posicoesCampoFormatadas}">
+                    <strong>Posição Campo:</strong> #{aluguelJogadorBean.jogadorDTO.posicoesCampoFormatadas}
+                </p>
+                <p rendered="#{not empty aluguelJogadorBean.jogadorDTO.posicoesFutsalFormatadas}">
+                    <strong>Posição Futsal:</strong> #{aluguelJogadorBean.jogadorDTO.posicoesFutsalFormatadas}
+                </p>
+                <p rendered="#{not empty aluguelJogadorBean.jogadorDTO.posicoesSocietyFormatadas}">
+                    <strong>Posição Society:</strong> #{aluguelJogadorBean.jogadorDTO.posicoesSocietyFormatadas}
+                </p>
+            </div>
+
+            <div class="profile-card">
+                <h3>Endereço</h3>
+                <p><strong>Estado:</strong> #{aluguelJogadorBean.jogadorDTO.enderecoDTO.estado}</p>
+                <p><strong>Cidade:</strong> #{aluguelJogadorBean.jogadorDTO.enderecoDTO.cidade}</p>
+                <p><strong>Bairro:</strong> #{aluguelJogadorBean.jogadorDTO.enderecoDTO.bairro}</p>
+                <p><strong>Rua:</strong> #{aluguelJogadorBean.jogadorDTO.enderecoDTO.rua}</p>
+                <p><strong>Número:</strong> #{aluguelJogadorBean.jogadorDTO.enderecoDTO.numero}</p>
+                <p><strong>CEP:</strong> #{aluguelJogadorBean.jogadorDTO.enderecoDTO.cep}</p>
+                <p><strong>Complemento:</strong> #{aluguelJogadorBean.jogadorDTO.enderecoDTO.complemento}</p>
+                <p><strong>Raio de Atuação:</strong> #{aluguelJogadorBean.jogadorDTO.raioAtuacao}</p>
+            </div>
+
+            <div class="profile-card">
+                <h3>Histórico</h3>
+                <p><strong>Histórico:</strong> #{aluguelJogadorBean.jogadorDTO.historico}</p>
+            </div>
+
+<ui:remove>
+            <div class="profile-card">
+                <h3>Dados Bancários</h3>
+                <p><strong>Banco:</strong> #{aluguelJogadorBean.jogadorDTO.dadosBancariosDTO.banco}</p>
+                <p><strong>Número da Conta:</strong> #{aluguelJogadorBean.jogadorDTO.dadosBancariosDTO.numeroConta}</p>
+                <p><strong>Agência:</strong> #{aluguelJogadorBean.jogadorDTO.dadosBancariosDTO.agencia}</p>
+                <p><strong>Chave Pix:</strong> #{aluguelJogadorBean.jogadorDTO.dadosBancariosDTO.chavePix}</p>
+                <p><strong>Tipo de Chave Pix:</strong> #{aluguelJogadorBean.jogadorDTO.dadosBancariosDTO.tipoChavePix}</p>
+            </div>
+</ui:remove>            
+
+            <div class="profile-card">
+                <h3>Detalhes Adicionais</h3>
+                <p><strong>Valor de Aluguel:</strong> #{aluguelJogadorBean.jogadorDTO.valorAluguel}</p>
+<ui:remove>                 
+                <p><strong>Avaliação:</strong> #{aluguelJogadorBean.jogadorDTO.avaliacao}</p>
+</ui:remove>                
+            </div>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

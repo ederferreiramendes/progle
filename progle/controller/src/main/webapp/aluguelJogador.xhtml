@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pm="http://primefaces.org/mobile"
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    template="/templates/template.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="idClube" value="#{aluguelJogadorBean.idClube}" />
+        <f:event type="preRenderView" listener="#{aluguelJogadorBean.buscarClubePorId}" />
+    </f:metadata>
+
+    <ui:define name="content">
+    
+
+        <div class="card" style="padding: 15px;">
+<ui:remove>
+            <h1 style="text-align: center; font-size: 22px;">Localizar Jogadores</h1>
+
+            <!-- Barra de busca -->
+            <h:form style="width: 100%; max-width: 600px; margin: auto;">
+                <pm:field style="width: 100%;">
+                    <p:inputText id="search" placeholder="Buscar jogador" type="search"
+                        value="#{aluguelJogadorBean.nomePesquisa}"
+                        style="width: 100%; padding: 10px; font-size: 16px;">
+                        <p:ajax event="keyup" listener="#{aluguelJogadorBean.buscar}" update="searchResult resultScroller" />
+                    </p:inputText>
+                </pm:field>
+
+                <h:panelGroup id="searchResult"
+                    rendered="#{not empty aluguelJogadorBean.nomePesquisa and not empty aluguelJogadorBean.alugueisJogadores}">
+                    <ui:repeat value="#{aluguelJogadorBean.alugueisJogadores}" var="jogador" />
+                    <h:outputText value="Nenhum jogador encontrado."
+                        rendered="#{empty aluguelJogadorBean.alugueisJogadores}" />
+                </h:panelGroup>
+            </h:form>
+
+            <br />
+ </ui:remove>
+
+            <!-- Lista de Jogadores -->
+            <h:panelGroup id="resultScroller" rendered="#{not empty aluguelJogadorBean.alugueisJogadores}">
+                <h:form id="form">
+                    <p:dataScroller value="#{aluguelJogadorBean.alugueisJogadores}" var="j" chunkSize="10" >
+                        <f:facet name="header">
+                            Role para baixo para carregar mais jogadores
+                        </f:facet>
+
+                        <!-- Card do jogador -->
+                        <div class="player-card"
+                            style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 10px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+
+                            <!-- Foto e nome -->
+                            <div style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 15px;">
+                                <img src="http://#{request.serverName}/progle/fotos/#{j.foto}"
+                                    alt="Foto Jogador"
+                                    style="width: 120px; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;" />
+                                <strong style="font-size: 18px;">#{j.nome}</strong>
+                            </div>
+
+                            <!-- Informações -->
+                            <div style="margin-bottom: 10px; font-size: 15px; line-height: 1.6;">
+                                <strong>ID:</strong> #{j.idJogador} <br />
+                                <strong>Raio de Atuação:</strong> #{j.raioAtuacao} km <br />
+<ui:remove>                                
+                                <strong>Avaliação:</strong>
+                                <p:rating readonly="true" value="#{j.getAvaliacaoInt()}" stars="5" cancel="false" />
+                                <h:outputText value="#{j.avaliacao}" style="margin-left: 5px; font-weight: bold;" />
+</ui:remove>
+                            </div>
+
+                            <!-- Valor + Botões -->
+                            <div style="text-align: center; margin-top: 10px;">
+                                <div style="font-size: 16px; font-weight: bold; margin-bottom: 5px;">
+                                    Valor do aluguel:
+                                    <h:outputText value="#{j.valor}">
+                                        <f:convertNumber currencySymbol="R$" type="currency" />
+                                    </h:outputText>
+                                </div>
+
+                                <h:outputLink value="#{aluguelJogadorBean.getLinkDetalhesId(j.idJogador)}"
+                                    style="display: block; margin: 8px 0; color: #004080; text-decoration: underline; font-weight: bold;">
+                                    Detalhes do Jogador
+                                </h:outputLink>
+
+                                <p:commandButton value="Convocar" icon="pi pi-check"
+                                    action="#{aluguelJogadorBean.redirecionarConvocacaoJogador(j.idJogador, aluguelJogadorBean.idClube)}"
+                                    style="border-radius: 8px; font-size: 16px; background-color: #004040; color: white; font-weight: bold; width: 100%; max-width: 200px;" />
+                                    
+                            </div>
+                        </div>
+                    </p:dataScroller>
+                </h:form>
+            </h:panelGroup>
+        </div>
+        
+    </ui:define>
+</ui:composition>

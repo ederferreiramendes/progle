@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:custom="http://customjsf.consult.inf.br/facelets/taglibs"
+	xmlns:composite="http://java.sun.com/jsf/composite/componentes"
+	template="/templates/template.xhtml">
+
+	<ui:define name="content">
+		<h:form id="formCadastro" class="tela-cadastro">
+			<h:panelGrid id="painelCadastro" columns="1"
+				style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;" >
+				<div class="img-login flex justify-content-center">
+					<img src="#{request.contextPath}/resources/images/proogle_logo.png"
+						alt="Logo da Empresa" width="30%" height="30%"
+						class="h-16 object-contain" />
+				</div>
+				<p:outputLabel value="Cadastro de Usuário"
+					style="display: block; text-align: center; font-size: 24px; font-weight: bold; margin: 20px 0;" />					
+
+				<pm:field>
+					<p:commandButton id="cadastroClube" value=" Cadastrar Clube"
+						action="#{navigatoBean.redirectToClube}" class="botao-entar"
+						icon="fa fa-futbol" iconPos="left"
+						style="border-radius: 10px; margin-top: 20px; margin-bottom: 10px; color:white" />
+				</pm:field>
+
+				<pm:field>
+					<p:commandButton id="cadastroJogador" value=" Cadastrar Jogador"
+						action="#{navigatoBean.redirectToJogador}" class="botao-entar"
+						icon="fa fa-user" iconPos="left"
+						style="border-radius: 10px; margin-top: 20px; margin-bottom: 10px; color:white" />
+				</pm:field>
+
+
+				<pm:field>
+					<p:commandButton id="cadastrarJuiz" value=" Cadastrar Juiz"
+						action="#{navigatoBean.redirectToJuiz}" class="botao-entar"
+						icon="fa fa-flag" iconPos="left"
+						style="border-radius: 10px; margin-top: 20px; margin-bottom: 10px; color:white" />
+				</pm:field>
+
+
+				<pm:field>
+					<h:outputLink value="./login.xhtml"
+						class="link-google-maps" style="margin-bottom: 8px;">
+						Se já possui conta, clique aqui
+					</h:outputLink>
+				</pm:field>
+
+			</h:panelGrid>
+			
+
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

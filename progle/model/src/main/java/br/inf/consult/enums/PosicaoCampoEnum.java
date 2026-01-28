@@ -1,0 +1,17 @@
+package br.inf.consult.enums;
+
+public enum PosicaoCampoEnum {
+	
+	GOLEIRO,
+	LATERAL_DIREITO,
+	LATERAL_ESQUERDO,
+	ZAGUEIRO,
+	VOLANTE,
+	MEIA_DEFENSIVO,
+	MEIA_OFENSIVO,
+	ATACANTE,
+	CENTROAVANTE,
+	PONTA_DIREITA,
+	PONTA_ESQUERDA;
+
+}

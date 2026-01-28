@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:custom="http://customjsf.consult.inf.br/facelets/taglibs"
+	xmlns:composite="http://java.sun.com/jsf/composite/componentes"
+	template="/templates/template.xhtml">
+
+<f:metadata>
+		<f:viewParam name="idLogin" value="#{usuarioSistemaBean.idLogin}" />
+		<f:event type="preRenderView"
+			listener="#{usuarioSistemaBean.buscarLoginPorId}" />
+	</f:metadata>
+	
+	<ui:define name="content">
+
+		<h:form id="formEditarSenha" class="tela-cadastro">
+			<h:panelGrid style="text-align: left; border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+				<h1>Editar Senha de Usuário</h1>
+				<pm:field>
+					<p:outputLabel for="cpf" value="CPF" />
+					<p:inputText id="cpf" placeholder="CPF" disabled="true"
+						value="#{usuarioSistemaBean.usuarioSistemaDTO.cpf}"
+						validatorMessage="CPF inválido">
+						<f:validateRegex pattern="\d{11}" />
+						<p:ajax event="blur" listener="#{cadastroClubeBean.validarCpf}"
+							update="msgCpf" process="@this" />
+					</p:inputText>
+					<p:message for="cpf" id="msgCpf" />
+				</pm:field>
+
+				<pm:field>
+					<p:outputLabel for="senha" value="Senha" />
+					<p:password id="senha" placeholder="Senha"
+						value="#{usuarioSistemaBean.usuarioSistemaDTO.senha}" required="true"
+						validatorMessage="Senha inválida. Deve conter pelo menos uma letra, um número, e ter 6 ou mais caracteres.">
+						<f:validateRegex pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z0-9]{6,}$" />
+						<p:ajax event="blur" update="msgSenha" process="senha" />
+					</p:password>
+
+					<p:message id="msgSenha" for="senha" />
+				</pm:field>
+
+				<pm:field>
+					<p:outputLabel for="confirmaSenha" value="Confirmar senha" />
+					<p:password id="confirmaSenha" placeholder="Confirmação de Senha*" required="true"
+						value="#{usuarioSistemaBean.confirmaSenhaTemporaria}" />
+					<p:message for="confirmaSenha" id="msgConfirmaSenha" />
+				</pm:field>
+
+				<p:commandButton id="btnCadastroClube" value="Salvar"
+					action="#{usuarioSistemaBean.editarSenha}" update="@form"
+					styleClass="botao-entar" icon="fa fa-user-plus"
+					style="text-align: left; border: none !important; min-width: 100%; max-width: 100%; margin: auto;"/>
+			</h:panelGrid>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

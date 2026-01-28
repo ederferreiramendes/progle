@@ -1,0 +1,774 @@
+@charset "UTF-8";
+
+body {
+	font-size: 16px;
+	font: normal 16px Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	color: black;
+	background-color: #c1d9e0
+}
+
+table {
+	width: 70%;
+}
+
+tr>th {
+	background-color: #DDD;
+}
+
+tr.linha1>td {
+	background-color: #EEE;
+}
+
+tr.linha2>td {
+	background-color: #FFF;
+}
+
+.erro {
+	color: #F00;
+}
+
+.info {
+	color: #00F;
+}
+
+.fatal {
+	color: #F00;
+	font-weight: bold;
+}
+
+.warn {
+	color: #C00;
+}
+
+.menu-container {
+	background-color: #00ff80;
+	width: 30px;
+	height: 30px;
+}
+
+.header-background {
+	background-color: #808080;
+	width: 100%;
+	height: 80px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 10px;
+	box-sizing: border-box;
+}
+
+.link-style a {
+	color: blue;
+	text-decoration: underline;
+	font-family: Arial, sans-serif;
+}
+
+table {
+	width: 70%; /* Largura do painel */
+	margin: 0 auto; /* Centraliza o painel */
+	padding: 20px; /* Espaçamento interno */
+	border-radius: 15px; /* Bordas arredondadas */
+	background-color: #f9f9f9; /* Cor de fundo do painel */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	position: relative;
+	border: none; /* Remove a borda padrão */
+	border-collapse: separate; /* Mantém o espaçamento do border-radius */
+	overflow: hidden; /* Evita que conteúdos escapem do painel */
+}
+
+form input {
+	width: 99%;
+	height: 40px;
+	border-radius: 10px; /* Bordas arredondadas nos inputs */
+	border: 1px solid black; /* Adicionando uma borda */
+	padding: 5px; /* Espaçamento interno */
+}
+
+.ui-accordion .ui-accordion-header {
+    display: flex; /* Usar flexbox para alinhar itens */
+    justify-content: space-between; /* Espalhar o conteúdo para as extremidades */
+    align-items: center; /* Alinha verticalmente ao centro */
+    background-color: #f8c471; /* Cor de fundo laranja claro */
+    color: #000000; /* Cor do texto */
+    padding: 10px; /* Espaçamento interno */
+    font-weight: bold; /* Negrito no texto */
+    border-bottom: 2px solid #ddd; /* Borda entre abas */
+    cursor: pointer; /* Muda o cursor ao passar sobre a aba */
+    font-size: 20px;
+}
+
+.titulo-centralizado {
+    display: block; /* Faz com que o label se comporte como um bloco */
+    text-align: center; /* Centraliza o texto */
+    font-size: 24px; /* Tamanho da fonte maior */
+    font-weight: bold; /* Torna a fonte em negrito */
+    margin: 20px 0; /* Adiciona margem superior e inferior, ajuste conforme necessário */
+}
+
+
+/* Estilo do ícone */
+.accordion-icon {
+    display: inline-block;
+    width: 16px; /* Largura do ícone */
+    height: 16px; /* Altura do ícone */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="black"><path d="M2 6h12l-6 6z"/></svg>'); /* Ícone de seta para baixo */
+    background-size: contain; /* Faz a imagem cobrir o espaço */
+    background-repeat: no-repeat; /* Não repete a imagem */
+    margin-left: 10px; /* Espaço entre o texto e o ícone */
+    transition: transform 0.3s; /* Transição suave para animação */
+}
+
+/* Adicionando uma classe para o ícone quando o acordeão está ativo */
+.ui-accordion .ui-accordion-header-active .accordion-icon {
+    transform: rotate(180deg); /* Rotaciona o ícone para indicar que está aberto */
+}
+
+
+.ui-accordion .ui-accordion-header-active .ui-icon {
+    transform: rotate(90deg);
+}
+
+
+label.ui-outputlabel {
+	font-weight: bold;
+	color: #004040;
+	font-size: 14px;
+	margin-bottom: 8px;
+	margin-top: 10px;
+	display: block;
+	text-align: left; /* Alinha o texto à esquerda */
+}
+
+.upload-button {
+	background-color: #f0f0f0; /* Cinza claro */
+	width: 9%; /* Ajuste conforme necessário */
+	height: 6%; /* Ajuste conforme necessário */
+	cursor: pointer; /* Muda o cursor para indicar que é clicável */
+	border-radius: 15px; /* Arredonda os cantos */
+	border: 1.5px solid black; /* Borda preta */
+	font-weight: bold; /* Deixa o texto em negrito */
+}
+
+.upload-button:hover {
+	background-color: #d0d0d0; /* Cinza escuro ao passar o mouse */
+}
+
+.img-login {
+	display: flex; /* Define um contêiner flexível */
+	justify-content: center; /* Centraliza horizontalmente */
+	align-items: center; /* Centraliza verticalmente */
+	margin-bottom: 20px; /* Espaçamento inferior opcional */
+}
+
+.tela-login {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	background-image: url("#{resource['images/progle.jpg2']}");
+	/* Adiciona a imagem de fundo */
+	background-color: #c1d9e0;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.painel-login {
+	width: 400px;
+	padding: 20px;
+	border-radius: 15px; /* Bordas arredondadas no painel */
+	background-color: #f9f9f9; /* Cor de fundo do painel */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	/* Sombra para dar profundidade */
+	border: none;
+}
+
+.tela-cadastro {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh; /* Maintain full viewport height */
+	background-image: url("#{resource['images/progle.jpg2']}");
+	background-color: #c1d9e0;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.painelCadastro {
+	background-color: rgba(249, 249, 249, 0.9);
+	border-radius: 15px;
+	padding: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.img-login {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 20px; /* Espaçamento inferior */
+	width: 100%; /* Ajuste para ocupar 100% do espaço disponível */
+}
+
+.painelCadastro {
+	background-color: rgba(249, 249, 249, 0.9);
+	/* Adiciona leve transparência para ver o fundo */
+	border-radius: 15px; /* Mantém bordas arredondadas */
+	padding: 20px; /* Padding interno */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	/* Sombra para profundidade */
+}
+
+.area-titulo-login {
+	color: white; /* Texto branco */
+	padding: 20px;
+	text-align: center;
+	border-radius: 15px;
+}
+
+.nome-progle {
+	font-family: 'Roboto', sans-serif; /* Aplicando a fonte Roboto */
+	font-size: 30px; /* Aumentando o tamanho da fonte */
+	margin-rgb: (255, 255, 255) 10px;
+	color: black; /* Azul escuro */
+	font-weight: bold; /* Deixando em negrito */
+}
+
+.titulo-login {
+	font-family: 'Roboto', sans-serif; /* Aplicando a fonte Roboto */
+	font-size: 24px; /* Aumentando o tamanho da fonte */
+	color: black; /* Azul escuro */
+	font-weight: bold; /* Deixando em negrito */
+}
+
+.input-login {
+	width: 96%;
+	border-radius: 10px; /* Bordas arredondadas nos inputs */
+	border: 2px solid black; /* Adicionando uma borda */
+	padding: 5px; /* Espaçamento interno */
+}
+
+.botao-cadastrar {
+	width: 100%;
+	height: 40px;
+	border: 2px solid black;
+	border-radius: 10px;
+	font-size: 14px;
+	font-weight: bold;
+	color: white
+}
+
+.botao-cadastrar:hover {
+	background-color: #c0c0c0;
+}
+
+.botao-entar {
+	width: 100%;
+	height: 40px;
+	border: 2px solid black;
+	border-radius: 10px;
+	font-size: 14px;
+	font-weight: bold;
+	color: white;
+	border-radius: 10px;
+	margin-top: 10px;
+	background-color: #004040
+}
+
+.botao-entar:hover {
+	background-color: #000000;
+}
+
+.botao-facebook {
+	width: 100%;
+	height: 40px;
+	background-color: #003366;
+	color: white;
+	border: none;
+	border-radius: 10px; /* Bordas arredondadas no botão */
+	font-size: 16px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.botao-facebook:hover {
+	background-color: black;
+}
+
+.link-esqueci-senha {
+	display: block;
+	text-align: center;
+	margin-top: 10px;
+	color: #003366;
+	text-decoration: none;
+	font-size: 14px;
+}
+
+h1 {
+	display: flex;
+	justify-content: center;
+	border-radius: 15px;
+	margin-top: 50px;
+}
+
+.ui-accordion-content {
+	font-weight: bold; /* Deixa o texto em negrito */
+	font-size: 15px; /* Ajuste para um tamanho de fonte menor */
+	font-family: 'Roboto', sans-serif;
+	/* Altere 'Roboto' para a fonte desejada */
+	text-align: center; /* Centraliza o texto */
+}
+
+.ui-accordion-header {
+	font-weight: bold; /* Deixa os títulos em negrito */
+	font-size: 15px; /* Ajuste para um tamanho de fonte menor */
+	font-family: 'Roboto', sans-serif;
+	/* Altere 'Roboto' para a fonte desejada */
+	text-align: center; /* Centraliza o título */
+	margin-bottom: 15px; /* Adiciona espaço entre as abas */
+}
+
+.link-google-maps {
+	font-style: italic; /* Deixa o texto em itálico */
+	text-decoration: none; /* Remove o sublinhado */
+	color: blue; /* Altera a cor se necessário */
+	font-size: 14px;
+}
+
+.termos {
+    text-decoration: none; /* Remove o sublinhado */
+    color: black; /* Altera a cor se necessário */
+    font-size: 14px; /* Define o tamanho da fonte */
+    font-weight: normal; /* Remove o negrito */
+    text-align: left; /* Alinha o texto à esquerda (ou conforme desejado) */
+    margin-left: 5px;
+}
+
+.label-historico {
+	margin-left: 130px; /* Ajuste a margem esquerda conforme necessário */
+}
+
+.button-arredondado {
+	border-radius: 10px; /* Ajuste o valor conforme necessário */
+	border: 2px solid black; /* Borda preta */
+	padding: 5px; /* Ajuste o padding conforme necessário */
+	font-weight: bold; /* Deixe o texto em negrito */
+	width: 50%; /* Largura do botão */
+	height: 40px;
+	cursor: pointer; /* Muda o cursor para indicar que é clicável */
+	margin: 0 auto; /* Centraliza horizontalmente */
+	display: block; /* Necessário para que o margin auto funcione */
+	background-color: #004040;
+	font-size: 14px;
+	color: white;
+}
+
+.button-arredondado:hover {
+	background-color: #c0c0c0; /* Cor de fundo ao passar o mouse */
+}
+
+.upload-button {
+	width: 100%; /* Aumenta a largura do botão */
+	height: 40px; /* Altura do botão */
+	border-radius: 10px; /* Bordas arredondadas */
+	background-color: #004040; /* Cor de fundo */
+	color: white; /* Cor do texto */
+	font-weight: bold; /* Texto em negrito */
+	cursor: pointer; /* Indica que é clicável */
+	border: 2px solid black; /* Borda preta */
+	margin-top: 10px; /* Espaço acima do botão */
+}
+
+.button-foto{
+	cursor: pointer; /* Indica que é clicável */
+	border-radius: 10px;
+	justify-content: center;
+	margin-left: 260px
+}
+.upload-button:hover {
+	background-color: #003030; /* Cor de fundo ao passar o mouse */
+}
+
+.centralizado {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start; /* Alinha à esquerda */
+	justify-content: center; /* Centraliza verticalmente */
+}
+
+.label-upload {
+	margin-bottom: 10px; /* Adiciona um espaço entre o label e o botão */
+	text-align: left; /* Alinha o texto à esquerda */
+	margin-left: 280px; /* Ajuste o valor conforme necessário */
+}
+
+.upload-button {
+	margin-left: 220px;
+	height: 20px;
+	width: 200px;
+}
+
+.custom-select {
+	width: 15%; /* Mantém a largura original */
+	padding: 8px; /* Espaçamento interno */
+	border: 1px solid #ccc; /* Borda padrão */
+	border-radius: 4px; /* Bordas arredondadas */
+	background-color: #fff; /* Cor de fundo */
+	color: #333; /* Cor do texto */
+	font-size: 14px; /* Tamanho da fonte */
+	appearance: none; /* Remove a aparência padrão do select */
+	background-image:
+		url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3E%3Cpath fill="%23999" d="M1 5h14L8 11 1 5z"/%3E%3C/svg%3E');
+	/* Adiciona uma seta personalizada */
+	background-repeat: no-repeat; /* Não repete a imagem */
+	background-position: right 10px center; /* Posição da seta */
+	background-size: 12px; /* Tamanho da seta */
+	cursor: pointer; /* Cursor em forma de ponteiro ao passar o mouse */
+	float: left; /* Alinha o select à esquerda */
+	margin-top: 5px; /* Espaço entre o label e o select */
+}
+
+.custom-select-pix {
+	width: 60%; /* Ajuste a largura conforme necessário */
+	padding: 11px; /* Espaçamento interno */
+	border: 1.5px solid #ccc; /* Borda padrão */
+	border-radius: 4px; /* Bordas arredondadas */
+	background-color: #fff; /* Cor de fundo */
+	color: #333; /* Cor do texto */
+	font-size: 14px; /* Tamanho da fonte */
+	appearance: none; /* Remove a aparência padrão do select */
+	background-image:
+		url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3E%3Cpath fill="%23999" d="M1 5h14L8 11 1 5z"/%3E%3C/svg%3E');
+	/* Adiciona uma seta personalizada */
+	background-repeat: no-repeat; /* Não repete a imagem */
+	background-position: right 10px center; /* Posição da seta */
+	background-size: 12px; /* Tamanho da seta */
+	cursor: pointer; /* Cursor em forma de ponteiro ao passar o mouse */
+	margin: 5px auto 10px; /* Espaço acima, centraliza e espaço abaixo */
+	display: block; /* Necessário para que o margin auto funcione */
+}
+
+.custom-select:focus {
+	border-color: #007BFF; /* Borda azul ao focar */
+	outline: none; /* Remove a borda padrão ao focar */
+	box-shadow: 0 0 5px rgba(0, 123, 255, .5); /* Sombra ao focar */
+}
+
+.meus-botoes .ui-button {
+	background-color: #004040; /* Cor de fundo do botão */
+	color: white; /* Cor do texto */
+	border-radius: 10px; /* Bordas arredondadas */
+	margin: 5px; /* Margem entre os botões */
+	padding: 10px 15px; /* Espaçamento interno dos botões */
+	font-size: 14px; /* Tamanho da fonte */
+	border: 2px solid black; /* Borda preta */
+}
+
+.meus-botoes .ui-button:hover {
+	background-color: #003030; /* Cor de fundo ao passar o mouse */
+}
+
+.custom-checkbox .ui-chkbox {
+	margin-bottom: 5px; /* Espaço entre os checkboxes */
+	margin-top: 5px; /* Espaço entre os checkboxes */
+	margin-bottom: 15px;
+}
+
+.custom-checkbox .ui-chkbox-box {
+	width: 18px; /* Largura da caixa */
+	height: 20px; /* Altura da caixa */
+	border: 1.5px solid #004040; /* Borda da caixa */
+	border-radius: 3px; /* Bordas levemente arredondadas */
+	cursor: pointer; /* Muda o cursor ao passar */
+}
+
+.custom-checkbox .ui-chkbox-box.ui-state-active {
+	background-color: #004040; /* Cor de fundo quando marcado */
+}
+
+.custom-checkbox .ui-chkbox-box.ui-state-active::after {
+	content: ''; /* Necessário para criar o ponto */
+	display: block; /* Faz o ponto aparecer */
+	width: 10px; /* Tamanho do ponto */
+	height: 10px; /* Tamanho do ponto */
+	border-radius: 50%; /* Faz o ponto redondo */
+	background-color: #fff; /* Cor do ponto */
+	position: absolute; /* Para posicionar o ponto dentro da caixa */
+	top: 4px; /* Ajusta a posição do ponto */
+	left: 4px; /* Ajusta a posição do ponto */
+}
+
+.custom-radio .ui-radiobutton {
+	align-items: center; /* Alinha verticalmente ao centro */
+	margin-bottom: 10px; /* Espaço entre as opções */
+}
+
+.custom-radio .ui-radiobutton-box {
+	width: 20px; /* Largura da caixa */
+	height: 20px; /* Altura da caixa */
+	border: 1.5px solid #004040; /* Borda da caixa */
+	border-radius: 50%; /* Faz a caixa ser redonda */
+	cursor: pointer; /* Muda o cursor ao passar */
+	position: relative; /* Necessário para posicionar o ponto */
+}
+
+.custom-radio .ui-radiobutton-box.ui-state-active {
+	background-color: #004040; /* Cor de fundo quando marcado */
+}
+
+.custom-radio .ui-radiobutton-box.ui-state-active::after {
+	content: ''; /* Necessário para criar o ponto */
+	display: block; /* Faz o ponto aparecer */
+	width: 10px; /* Tamanho do ponto */
+	height: 10px; /* Tamanho do ponto */
+	border-radius: 50%; /* Faz o ponto ser redondo */
+	background-color: #fff; /* Cor do ponto */
+	position: absolute; /* Para posicionar o ponto dentro da caixa */
+	top: 50%; /* Alinha verticalmente ao centro */
+	left: 50%; /* Alinha horizontalmente ao centro */
+	transform: translate(-50%, -50%);
+	/* Ajusta o ponto ao centro da caixa */
+}
+
+.ui-slider {
+	height: 8px; /* Altura da linha do slider */
+	background: #d3d3d3; /* Cor da linha do slider */
+	border-radius: 4px; /* Borda arredondada para a linha */
+	margin-top: 10px; /* Distância entre a linha do slider e o input */
+}
+
+.ui-slider .ui-slider-handle {
+	height: 16px; /* Altura do botão que arrasta */
+	width: 16px; /* Largura do botão que arrasta */
+	background: #000; /* Cor do botão que arrasta (preto) */
+	border-radius: 50%; /* Arredonda o botão */
+	border: 1px solid #ffffff; /* Borda branca ao redor do botão */
+	cursor: pointer; /* Muda o cursor para indicar que pode arrastar */
+	margin-top: -4px; /* Alinha o botão com a linha do slider */
+}
+
+.ui-slider .ui-slider-handle:hover {
+	background: #444; /* Cor do botão ao passar o mouse */
+}
+
+.ui-slider-value {
+	font-size: 1.3em; /* Aumenta o tamanho da fonte */
+	font-weight: bold; /* Deixa a fonte em negrito */
+	color: #000; /* Cor do texto */
+}
+
+.ui-inputfield {
+	font-size: 1.3em; /* Aumenta o tamanho da fonte do input */
+	font-weight: bold; /* Deixa a fonte em negrito */
+}
+
+.km-text {
+	font-size: 1.2em; /* Aumenta a fonte */
+	margin-left: 10px; /* Ajusta a margem esquerda */
+}
+
+#raioAtuacao {
+	width: 150px; /* Ajuste o valor conforme necessário */
+}
+
+/* Estilo do input "KM" */
+.inputKM {
+	width: 45px;
+	height: 25px;
+}
+
+.custom-checkbox .ui-selectmanycheckbox-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Espaço entre as opções */
+    margin-right: 2px;
+}
+
+.custom-checkbox .ui-chkbox-box {
+    width: 20px; /* Largura da caixa */
+    height: 20px; /* Altura da caixa */
+    border: 1.5px solid #004040; /* Borda da caixa */
+    border-radius: 50%; /* Faz a caixa ser redonda */
+    cursor: pointer; /* Muda o cursor ao passar */
+    position: relative; /* Necessário para posicionar o ponto */
+}
+
+.custom-checkbox .ui-chkbox-box.ui-state-active {
+    background-color: #004040; /* Cor de fundo quando marcado */
+}
+
+.custom-checkbox .ui-chkbox-box.ui-state-active::after {
+    content: ''; /* Necessário para criar o ponto */
+    display: block; /* Faz o ponto aparecer */
+    width: 10px; /* Tamanho do ponto */
+    height: 10px; /* Tamanho do ponto */
+    border-radius: 50%; /* Faz o ponto ser redondo */
+    background-color: #fff; /* Cor do ponto */
+    position: absolute; /* Para posicionar o ponto dentro da caixa */
+    top: 50%; /* Alinha verticalmente ao centro */
+    left: 50%; /* Alinha horizontalmente ao centro */
+    transform: translate(-50%, -50%);
+    /* Ajusta o ponto ao centro da caixa */
+}
+
+/* Classe para ocultar o conteúdo da página */
+.modal-open {
+    position: fixed; /* Fixa o conteúdo da página */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro e transparente */
+    z-index: 1000; /* Coloca o fundo acima de outros elementos */
+}
+
+.ui-dialog .ui-dialog-content p {
+    font-weight: normal; /* Remove o negrito para o texto do modal */
+    text-align: left; /* Alinha o texto à esquerda */
+    font-size: 12px;
+}
+
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.profile-header h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.profile-header h2 {
+    font-size: 18px;
+    color: #555;
+}
+
+.profile-info {
+    margin-bottom: 20px;
+}
+
+.profile-info h3 {
+    font-size: 20px;
+    color: #007acc;
+    border-bottom: 2px solid #007acc;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.info-item {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: bold;
+    
+}
+
+.info-item strong {
+    color: #555;
+}
+
+
+.endereco-estilo {
+    font-size: 0.9em; /* Tamanho de fonte menor */
+    font-style: italic; /* Estilo itálico */
+}
+
+.button-item-spacing {
+    margin: 0 5px;
+}
+
+.custom-panel {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    width: 800px;
+    height: 200px;
+}
+
+.custom-input {
+    height: 30px; /* Define uma altura menor */
+    padding: 4px; /* Ajusta o preenchimento interno */
+    font-size: 14px; /* Opcional: ajuste o tamanho da fonte para combinar */
+}
+
+.custom-rating {
+    display: inline-block !important;
+    visibility: visible !important;
+}
+
+
+/* Tablets e menores */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  /* Ajuste layouts, menus, etc */
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+  body {
+    font-size: 12px;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+    .ui-accordion-header {
+        font-size: 0.9em;
+        padding: 10px;
+    }
+    .ui-accordion-content {
+        padding: 10px;
+    }
+}
+
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+ .profile-card {
+                background: #fff;
+                border-radius: 10px;
+                padding: 15px;
+                margin-bottom: 20px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            }
+            .profile-card h3 {
+                margin-bottom: 10px;
+                font-size: 18px;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 5px;
+            }
+            .profile-card p {
+                margin: 8px 0;
+                font-size: 15px;
+                line-height: 1.4;
+            }
+            @media (max-width: 600px) {
+                h2 { font-size: 18px; }
+                .profile-card { padding: 12px; }
+                .profile-card p { font-size: 14px; }
+            }

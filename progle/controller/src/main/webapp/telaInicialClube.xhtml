@@ -1,0 +1,88 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:custom="http://customjsf.consult.inf.br/facelets/taglibs"
+	xmlns:composite="http://java.sun.com/jsf/composite/componentes"
+	template="/templates/template.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="idClube" value="#{telaInicialClubeBean.idClube}" />
+		<f:viewParam name="idLogin" value="#{telaInicialClubeBean.idLogin}" />
+		<f:event type="preRenderView"
+			listener="#{telaInicialClubeBean.buscarClubeLoginPorId}" />
+	</f:metadata>
+
+	<ui:define name="content">
+		<h:form id="formTelaInicial">
+			<h:panelGrid id="painelTelaInicial" columns="1"
+				styleClass="panel-tela-inicial"
+				style="border: none;  padding: 20px; width: 90%; max-width: 500px; margin-top: auto; margin-bottom: auto; margin-left: auto; margin-right: auto;">
+
+				<div class="img-login" style="text-align: center; margin-top: 20px;">
+					<img src="#{request.contextPath}/resources/images/proogle_logo.png"
+						alt="Logo da Empresa" width="30%" height="30%"
+						class="h-16 object-contain" />
+				</div>
+				<p:outputLabel value="Tela Inicial - Clubes"
+					style="display: block; text-align: center; font-size: 24px; font-weight: bold; margin: 20px 0;" />
+
+				<h:panelGroup id="painelConvocarAtleta" columns="1">
+
+					<p:commandButton value="Convocar Jogador" styleClass="botao-entrar"
+						style="border-radius: 10px; margin: 10px 0; width: 100%;"
+						action="#{telaInicialClubeBean.redirecionarAluguelJogador(telaInicialClubeBean.idClube)}"
+						immediate="true" />
+
+					<p:commandButton value="Convocar Juiz" styleClass="botao-entrar"
+						style="border-radius: 10px; margin: 10px 0; width: 100%;"
+						action="#{telaInicialClubeBean.redirecionarAluguelJuiz(telaInicialClubeBean.idClube)}"
+						immediate="true" />
+
+<ui:remove>
+					<p:commandButton value="Histórico de jogos e pagamentos jogadores"
+						styleClass="botao-entrar"
+						style="border-radius: 10px; margin: 10px 0; width: 100%;"
+						action="#{telaInicialClubeBean.redirecionarHistoricoJogadores(telaInicialClubeBean.idClube)}"
+						immediate="true" />
+
+					<p:commandButton value="Histórico de jogos e pagamentos juizes"
+						styleClass="botao-entrar"
+						style="border-radius: 10px; margin: 10px 0; width: 100%;"
+						action="#{telaInicialClubeBean.redirecionarHistoricoJuizes(telaInicialClubeBean.idClube)}"
+						immediate="true" />
+</ui:remove>
+					<p:commandButton value="Duvidas Frequentes" styleClass="botao-entrar"
+						style="border-radius: 10px; margin: 10px 0; width: 100%;"
+						action="#{telaInicialClubeBean.redirecionarDuvidasFrequentesClube(telaInicialClubeBean.idClube)}"
+						immediate="true" />
+<ui:remove>
+					<p:commandButton value="Minha Conta" styleClass="botao-entrar"
+						style="border-radius: 10px; margin: 10px 0; width: 100%;"
+						action="#{telaInicialClubeBean.redirecionarEditarClube(telaInicialClubeBean.idClube)}"
+						immediate="true" />
+</ui:remove>
+					<p:commandButton value="Alterar Senha" styleClass="botao-entrar"
+						style="border-radius: 10px; margin: 10px 0; width: 100%;"
+						action="#{telaInicialClubeBean.redirecionarEditarSenhaClube(telaInicialClubeBean.idLogin)}"
+						immediate="true" />
+
+				</h:panelGroup>
+
+				<h:panelGroup id="painelSair" columns="1">
+					<p:commandButton value="Sair"
+						action="#{navigatoBean.redirectToLogin}" styleClass="botao-entrar"
+						style="border-radius: 10px; margin-top: 30px; font-size: 16px; 
+                                background-color: #004040; color: white; font-weight: bold; width: 100%;"
+						icon="fa fa-lock" immediate="true" />
+				</h:panelGroup>
+
+			</h:panelGrid>
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

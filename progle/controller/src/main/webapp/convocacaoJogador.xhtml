@@ -1,0 +1,83 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pm="http://primefaces.org/mobile"
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    template="/templates/template.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="idJogador" value="#{convocacaoJogadorBean.idJogador}" />
+        <f:viewParam name="idClube" value="#{convocacaoJogadorBean.idClube}" />
+        <f:event type="preRenderView" listener="#{convocacaoJogadorBean.buscarConvocacaoJogadorPorId}" />
+    </f:metadata>
+
+    <ui:define name="content">
+        <h:form id="formConvocacao" style="max-width: 100%; padding: 15px;">
+
+            <!-- Logo centralizada -->
+            <div class="img-login" style="text-align: center; margin-top: 20px;">
+                <img src="#{request.contextPath}/resources/images/proogle_logo.png"
+                     width="30%" height="30%" />
+            </div>
+
+            <!-- Título -->
+            <p:outputLabel value="Convocação do Jogador"
+                style="display: block; text-align: center; font-size: 22px; font-weight: bold; margin: 20px 0;" />
+
+            <h:panelGrid id="painelConvocacao" columns="1"
+                style="border: none !important; width: 100%; margin: auto;">
+
+                <!-- Informações pessoais -->
+                <p:panel header="Informações Pessoais" styleClass="mobile-card">
+                    <div class="info-item">
+                        <h6>Nome:</h6>
+                        <span>#{convocacaoJogadorBean.jogadorDTO.nome}</span>
+                    </div>
+                    <div class="info-item" rendered="#{not empty convocacaoJogadorBean.jogadorDTO.apelido}">
+                        <h6>Apelido:</h6>
+                        <span>#{convocacaoJogadorBean.jogadorDTO.apelido}</span>
+                    </div>
+                    <div class="info-item">
+                        <h6>Valor de Aluguel:</h6>
+                        <span>#{convocacaoJogadorBean.jogadorDTO.valorAluguel}</span>
+                    </div>
+                </p:panel>
+
+                <!-- Informações da Partida -->
+                <p:panel header="Informações da Partida" styleClass="mobile-card">
+                    <pm:field>
+                        <p:outputLabel for="dataPartida" value="Data da partida:" />
+						<p:calendar id="dataPartida" required="true"
+							placeholder="Data *" mask="99/99/9999" showOn="false"
+							value="#{convocacaoJogadorBean.novaConvocacao.dataPartida}"
+							pattern="dd/MM/yyyy" navigator="true" locale="pt_BR"
+							validatorMessage="Formato da data de nascimento incorreto">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+							<p:ajax event="blur" process="@this"  update="btnProsseguir"/>
+						</p:calendar>                        
+                        <p:message for="dataPartida" />
+                    </pm:field>
+
+                    <pm:field>
+                        <p:outputLabel for="tipoJogo" value="Tipo de jogo" />
+                        <p:selectOneRadio id="tipoJogo" required="true"
+                                          value="#{convocacaoJogadorBean.novaConvocacao.tipoJogo}">
+                            <f:selectItems value="#{convocacaoJogadorBean.tipoJogoOptions}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
+                            <p:ajax event="change" process="@this"  update="btnProsseguir"/>
+                        </p:selectOneRadio>
+                        <p:message for="tipoJogo" />
+                    </pm:field>
+                </p:panel>
+
+                <!-- Botão Proseguir -->
+				<p:commandButton
+					id="btnProsseguir" value="Prosseguir"
+					oncomplete="location.href='https://wa.me/5511947370498?text=#{convocacaoJogadorBean.msgConvocacao}'"
+					style="border-radius: 10px; margin-top: 30px; font-size: 16px; background-color: #004040; color: white; font-weight: bold; width: 100%;"
+					icon="fa fa-arrow-right" process="@form"/>
+			</h:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:custom="http://customjsf.consult.inf.br/facelets/taglibs"
+	xmlns:composite="http://java.sun.com/jsf/composite/componentes"
+	template="/templates/template.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="idJuiz" value="#{telaInicialJuizBean.idJuiz}" />
+		<f:viewParam name="idLogin" value="#{telaInicialJuizBean.idLogin}" />
+		<f:event type="preRenderView"
+			listener="#{telaInicialJuizBean.buscarJuizLoginPorId}" />
+	</f:metadata>
+
+	<ui:define name="content">
+
+		<h:form id="formTelaInicial">
+			<h:panelGrid id="painelTelaInicial" columns="1"
+				style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;
+				none;  margin-top: auto; margin-bottom: auto; margin-left: auto; margin-right: auto;">
+
+				<div class="img-login" style="text-align: center; margin-top: 20px;">
+					<img src="#{request.contextPath}/resources/images/proogle_logo.png"
+						alt="Logo da Empresa" width="30%" height="30%"
+						class="h-16 object-contain" />
+				</div>
+				<p:outputLabel value="Tela Inicial - Juiz"
+					style="display: block; text-align: center; font-size: 24px; font-weight: bold; margin: 20px 0;" />
+
+				<h:panelGroup id="painelConvocarAtleta" columns="1">
+<ui:remove>
+					<p:commandButton value="Histórico de jogos e pagamentos"
+						styleClass="botao-entrar"
+						style="border-radius: 10px; margin: 10px 0; width: 100%;"
+						action="#{telaInicialJuizBean. redirecionarHistoricoJuizClube(telaInicialJuizBean.idJuiz)}"
+						immediate="true" />
+</ui:remove>							
+						
+					<p:commandButton value="Dúvidas frequentes" styleClass="botao-entrar"
+						style="border-radius: 10px; margin: 10px 0; width: 100%;"
+						action="#{telaInicialJuizBean.redirecionarDuvidasFrequentesJuiz(telaInicialJuizBean.idJuiz)}"
+						immediate="true" />
+<ui:remove>
+					<p:commandButton value="Minha Conta" styleClass="botao-entrar"
+						style="border-radius: 10px; margin: 10px 0; width: 100%;"
+						action="#{telaInicialJuizBean.redirecionarEditarJuiz(telaInicialJuizBean.idJuiz)}"
+						immediate="true" />
+</ui:remove>					
+					<p:commandButton value="Alterar Senha" styleClass="botao-entrar"
+						style="border-radius: 10px; margin: 10px 0; width: 100%;"
+						action="#{telaInicialJuizBean.redirecionarEditarSenhaJuiz(telaInicialJuizBean.idLogin)}"
+						immediate="true" />
+
+				</h:panelGroup>
+
+				<h:panelGroup id="painelSair" columns="1">
+					<p:commandButton value="Sair"
+						action="#{navigatoBean.redirectToLogin}" styleClass="botao-entrar"
+						style="border-radius: 10px; margin-top: 30px; font-size: 16px; 
+                                background-color: #004040; color: white; font-weight: bold; width: 100%;"
+						icon="fa fa-lock" immediate="true" />
+				</h:panelGroup>
+
+			</h:panelGrid>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

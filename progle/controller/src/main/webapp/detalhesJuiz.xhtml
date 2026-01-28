@@ -1,0 +1,125 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:custom="http://customjsf.consult.inf.br/facelets/taglibs"
+	xmlns:composite="http://java.sun.com/jsf/composite/componentes"
+	template="/templates/template.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="idJuiz" value="#{aluguelJuizBean.idJuiz}" />
+		<f:event type="preRenderView"
+			listener="#{aluguelJuizBean.buscarJuizPorId()}" />
+	</f:metadata>
+
+	<ui:define name="content">
+		<h:body>
+			<h:form id="juizProfileForm" class="profile-container">
+				<div class="profile-header">
+					<img
+						src="http://#{request.serverName}/progle/fotos//#{aluguelJuizBean.juizDTO.fotoCaminho}"
+						alt="Foto do uiz" width="60px" height="80px" />
+					<h2>
+						<strong>Nome:</strong> #{aluguelJuizBean.juizDTO.nome}
+					</h2>
+				</div>
+
+				<div class="profile-info">
+					<h3>Informações Pessoais</h3>
+					<div class="info-item">
+						<strong>CPF:</strong> #{aluguelJuizBean.juizDTO.cpf}
+					</div>
+
+				</div>
+
+				<div class="profile-info">
+					<h3>Endereço</h3>
+					<div class="info-item">
+						<strong>Estado:</strong>
+						#{aluguelJuizBean.juizDTO.enderecoDTO.estado}
+					</div>
+					<div class="info-item">
+						<strong>Cidade:</strong>
+						#{aluguelJuizBean.juizDTO.enderecoDTO.cidade}
+					</div>
+					<div class="info-item">
+						<strong>Bairro:</strong>
+						#{aluguelJuizBean.juizDTO.enderecoDTO.bairro}
+					</div>
+					<div class="info-item">
+						<strong>Rua:</strong>
+						#{aluguelJuizBean.juizDTO.enderecoDTO.rua}
+					</div>
+					<div class="info-item">
+						<strong>Número:</strong>
+						#{aluguelJuizBean.juizDTO.enderecoDTO.numero}
+					</div>
+					<div class="info-item">
+						<strong>CEP:</strong>
+						#{aluguelJuizBean.juizDTO.enderecoDTO.cep}
+					</div>
+					<div class="info-item">
+						<strong>Complemento:</strong>
+						#{aluguelJuizBean.juizDTO.enderecoDTO.complemento}
+					</div>
+					<div class="info-item">
+						<strong>Raio de Atuação:</strong>
+						#{aluguelJuizBean.juizDTO.raioAtuacao}
+					</div>
+
+				</div>
+
+				<div class="profile-info">
+					<h3>Histórico</h3>
+					<div class="info-item">
+						<strong>Histórico:</strong>
+						#{aluguelJuizBean.juizDTO.historico}
+					</div>
+				</div>
+
+<ui:remove>
+				<div class="profile-info">
+					<h3>Dados Bancários</h3>
+					<div class="info-item">
+						<strong>Banco:</strong>
+						#{aluguelJuizBean.juizDTO.dadosBancariosDTO.banco}
+					</div>
+					<div class="info-item">
+						<strong>Número da Conta:</strong>
+						#{aluguelJuizBean.juizDTO.dadosBancariosDTO.numeroConta}
+					</div>
+					<div class="info-item">
+						<strong>Agência:</strong>
+						#{aluguelJuizBean.juizDTO.dadosBancariosDTO.agencia}
+					</div>
+					<div class="info-item">
+						<strong>Chave Pix:</strong>
+						#{aluguelJuizBean.juizDTO.dadosBancariosDTO.chavePix}
+					</div>
+					<div class="info-item">
+						<strong>Tipo de Chave Pix:</strong>
+						#{aluguelJuizBean.juizDTO.dadosBancariosDTO.tipoChavePix}
+					</div>
+				</div>
+</ui:remove>				
+
+				<div class="profile-info">
+					<h3>Detalhes Adicionais</h3>
+					<div class="info-item">
+						<strong>Valor de Aluguel:</strong>
+						#{aluguelJuizBean.juizDTO.valorAluguel}
+					</div>
+<ui:remove> 					
+					<div class="info-item">
+						<strong>Avaliação:</strong>
+						#{aluguelJuizBean.juizDTO.avaliacao}
+					</div>
+</ui:remove>					
+				</div>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>

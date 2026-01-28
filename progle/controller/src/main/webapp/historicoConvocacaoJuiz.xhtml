@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    template="/templates/template.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="idClube" value="#{historicoJuizBean.idClube}" />
+        <f:event type="preRenderView" listener="#{historicoJuizBean.buscarClubePorId}" />
+    </f:metadata>
+
+    <ui:define name="content">
+        <h:form id="historicoForm">
+            <h1>Histórico das convocações de juízes</h1>
+            <p:messages autoUpdate="true" closable="true" />
+
+            <ui:repeat value="#{historicoJuizBean.historicoJuizes}" var="historico">
+                <p:panel styleClass="mobile-card" header="#{historico.nomeJuiz}">
+                                    
+                    <div class="field-row">
+                        <h6 class="label">ID Convocação:</h6>
+                        <span class="value">#{historico.id}</span>
+                    </div>
+                    <br/>
+                    
+                    <div class="field-row">
+                        <h6 class="label">Nome do Juiz:</h6>
+                        <span class="value">#{historico.nomeJuiz}</span>
+                    </div>
+                    <br/>
+
+                    <div class="field-row">
+                        <h6 class="label">Data da convocação:</h6>
+                        <span class="value">#{historicoJuizBean.formatarDataConvocacao(historico.dataDaConvocacao)}</span>
+                    </div>
+                    <br/>
+
+                    <div class="field-row">
+                        <h6 class="label">Valor de Contratação:</h6>
+                        <span class="value">#{historico.valor}</span>
+                    </div>
+                    <br/>
+
+                    <div class="field-row">
+                        <h6 class="label">Endereço da partida:</h6>
+                        <span class="value">#{historico.enderecoCompleto}</span>
+                    </div>
+                    <br/>
+
+                    <div class="field-row">
+                        <h6 class="label">Tipo de Jogo:</h6>
+                        <span class="value">#{historico.tipoJogo}</span>
+                    </div>
+                    <br/>
+
+                    <div class="field-row">
+                        <h6 class="label">Tipo de Juiz:</h6>
+                        <span class="value">#{historico.tipoJuizEnum}</span>
+                    </div>
+                    <br/>
+
+                    <div class="field-row">
+                        <h6 class="label">Avaliação:</h6>
+                        <p:rating value="#{historico.avaliacao}" cancel="false" styleClass="value">
+                            <p:ajax event="rate"
+                                listener="#{historicoJuizBean.salvarAvaliacao(historico.id, historico.avaliacao)}"
+                                update="@this" />
+                        </p:rating>
+                    </div>
+                </p:panel>
+            </ui:repeat>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

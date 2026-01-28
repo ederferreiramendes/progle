@@ -1,0 +1,684 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:custom="http://customjsf.consult.inf.br/facelets/taglibs"
+	xmlns:composite="http://java.sun.com/jsf/composite/componentes"
+	template="/templates/template.xhtml">
+	
+	<ui:define name="content">
+	
+			
+		<h:form id="formCadastro" class="tela-cadastro">
+				<h:panelGrid columns="1" style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+				<h1>Cadastro de Clube</h1>
+				<p:accordionPanel activeIndex="-1">
+				<ui:remove></ui:remove>
+					<p:tab title="Dados pessoais">
+						<h:panelGrid id="painelCadastroClube" columns="1"
+							class="painelCadastro"
+							style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+							<pm:field>
+								<p:outputLabel for="cpf" value="CPF do responsável" />
+								<p:inputText id="cpf" required="true" placeholder="CPF *"
+									value="#{cadastroClubeBean.novoClube.cpf}"
+									validatorMessage="CPF inválido">
+									<f:validateRegex pattern="\d{11}" />
+									<p:ajax event="blur" listener="#{cadastroClubeBean.validarCpf}"
+										update="msgCpf" process="@this" />
+								</p:inputText>
+								<p:message for="cpf" id="msgCpf" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="nomeResponsavel" value="Nome do responsável" />
+								<p:inputText id="nomeResponsavel" required="true"
+									placeholder="Nome do responsável *"
+									value="#{cadastroClubeBean.novoClube.responsavel}" />
+								<p:message id="msgNomeResponsavel" for="nomeResponsavel" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="cnpj" value="CNPJ do clube" />
+								<p:inputText id="cnpj" placeholder="CNPJ"
+									value="#{cadastroClubeBean.novoClube.cnpj}"
+									validatorMessage="CNPJ inválido">
+									<f:validateRegex pattern="\d{14}" />
+									<f:ajax event="blur" render="msgCnpj :formTabelaClube"
+										execute="@this" />
+								</p:inputText>
+								<p:message id="msgCnpj" for="cnpj" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="nome" value="Nome do clube" />
+								<p:inputText id="nome" required="true"
+									placeholder="Nome do clube *"
+									value="#{cadastroClubeBean.novoClube.nome}" />
+								<p:message id="msgNome" for="nome" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="senha" value="Senha" />
+								<p:password id="senha" required="true" placeholder="Senha *"
+									value="#{cadastroClubeBean.novoClube.senha}"
+									validatorMessage="Senha inválida. Deve conter pelo menos uma letra, um número, e ter 6 ou mais caracteres.">
+									<f:validateRegex
+										pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z0-9]{6,}$" />
+									<p:ajax event="blur" update="msgSenha" process="senha" />
+								</p:password>
+
+								<p:message id="msgSenha" for="senha" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="confirmaSenha" value="Confirmar senha" />
+								<p:password id="confirmaSenha" required="true"
+									placeholder="Confirmação de Senha*"
+									value="#{cadastroClubeBean.confirmaSenhaTemporaria}" />
+								<p:message for="confirmaSenha" id="msgConfirmaSenha" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="email" value="Email" />
+								<p:inputText id="email" required="true" placeholder="Email*"
+									value="#{cadastroClubeBean.novoClube.email}" />
+								<p:message for="email" id="msgEmail" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="contato" value="Contato" />
+								<p:inputMask id="contato" required="true" mask="(99) 99999-9999"
+									placeholder="Contato *"
+									value="#{cadastroClubeBean.novoClube.contato}" />
+								<p:message id="msgContato" for="contato" />
+							</pm:field>
+						</h:panelGrid>
+					</p:tab>
+
+					<p:tab title="Endereço">
+						<h:panelGrid id="painelCadastroEndereco" columns="1"
+							style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+
+							<pm:field>
+								<p:outputLabel for="cep" value="CEP" />
+								<p:inputMask id="cep" required="true" placeholder="CEP *" mask="99999-999"
+									value="#{cadastroClubeBean.novoClube.enderecoDTO.cep}"
+									validatorMessage="CEP inválido">
+									<p:ajax event="blur"
+										listener="#{cadastroClubeBean.carregarEnderecoPorCep}"
+										update="painelCadastroEndereco" process="@this" />
+								</p:inputMask>
+								<p:message id="msgCep" for="cep" />
+							</pm:field>
+
+
+							<pm:field>
+								<p:outputLabel for="estado" value="Estado" />
+								<p:selectOneMenu id="estado" label="Selecione os Estados"
+									value="#{cadastroClubeBean.novoClube.enderecoDTO.estado}"
+									styleClass="custom-select" rendered="true">
+									<!--  
+								<f:selectItem itemLabel="AC" itemValue="AC" />
+								<f:selectItem itemLabel="AL" itemValue="AL" />
+								<f:selectItem itemLabel="AM" itemValue="AM" />
+								<f:selectItem itemLabel="AP" itemValue="AP" />
+								<f:selectItem itemLabel="BA" itemValue="BA" />
+								<f:selectItem itemLabel="CE" itemValue="CE" />
+								<f:selectItem itemLabel="DF" itemValue="DF" />
+								<f:selectItem itemLabel="ES" itemValue="ES" />
+								<f:selectItem itemLabel="GO" itemValue="GO" />
+								<f:selectItem itemLabel="MA" itemValue="MA" />
+								<f:selectItem itemLabel="MT" itemValue="MT" />
+								<f:selectItem itemLabel="MS" itemValue="MS" />
+								<f:selectItem itemLabel="MG" itemValue="MG" />
+								<f:selectItem itemLabel="PA" itemValue="PA" />
+								<f:selectItem itemLabel="PB" itemValue="PB" />
+								<f:selectItem itemLabel="PR" itemValue="PR" />
+								<f:selectItem itemLabel="PE" itemValue="PE" />
+								<f:selectItem itemLabel="PI" itemValue="PI" />
+								<f:selectItem itemLabel="RJ" itemValue="RJ" />
+								<f:selectItem itemLabel="RN" itemValue="RN" />
+								<f:selectItem itemLabel="RS" itemValue="RS" />
+								<f:selectItem itemLabel="RO" itemValue="RO" />
+								<f:selectItem itemLabel="RR" itemValue="RR" />
+								<f:selectItem itemLabel="SC" itemValue="SC" /> n-->
+									<f:selectItem itemLabel="SP" itemValue="SP" />
+									<!--  
+								<f:selectItem itemLabel="SE" itemValue="SE" />
+								<f:selectItem itemLabel="TO" itemValue="TO" />-->
+								</p:selectOneMenu>
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="cidade" value="Cidade" />
+								<p:inputText id="cidade" required="true" placeholder="Cidade *"
+									value="#{cadastroClubeBean.novoClube.enderecoDTO.cidade}">
+									<f:ajax event="blur" render="linkGoogleMaps" execute="@this" />
+								</p:inputText>
+								<p:message for="cidade" id="msgCidade" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="bairro" value="Bairro" />
+								<p:inputText id="bairro" required="true" placeholder="Bairro *"
+									value="#{cadastroClubeBean.novoClube.enderecoDTO.bairro}">
+									<f:ajax event="blur" render="linkGoogleMaps" execute="@this" />
+								</p:inputText>
+								<p:message for="bairro" id="msgBairro" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="rua" value="Rua" />
+								<p:inputText id="rua" required="true" placeholder="Rua *"
+									value="#{cadastroClubeBean.novoClube.enderecoDTO.rua}">
+									<f:ajax event="blur" render="linkGoogleMaps" execute="@this" />
+								</p:inputText>
+								<p:message for="rua" id="msgRua" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="numero" value="Número" />
+								<p:inputText id="numero" required="true" placeholder="Número *"
+									value="#{cadastroClubeBean.novoClube.enderecoDTO.numero}">
+									<f:ajax event="blur" render="linkGoogleMaps" execute="@this" />
+								</p:inputText>
+								<p:message for="numero" id="msgNumero" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="complemento" value="Complemento" />
+								<p:inputText id="complemento" placeholder="Complemento"
+									value="#{cadastroClubeBean.novoClube.enderecoDTO.complemento}">
+									<f:ajax event="blur" render="linkGoogleMaps" execute="@this" />
+								</p:inputText>
+								<p:message for="complemento" id="msgComplemento" />
+							</pm:field>
+
+							
+							<pm:field>
+								<p:commandLink value="Ver no mapa"
+									type="button"  
+									onclick="PF('dlgMap').show()" update="formMap"
+									alt="Visualizar o enderelo no mapa" />
+							</pm:field>
+
+
+						</h:panelGrid>
+					</p:tab>
+
+					<p:tab title="Sobre">
+						<h:panelGrid id="painelCadastroHistorico" columns="1" style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+							<pm:field>
+								<p:outputLabel for="historico" value="Conte sobre o clube"
+									styleClass="label-historico" />
+								<p:inputTextarea id="historico" placeholder="Sobre"
+									value="#{cadastroClubeBean.novoClube.historico}" rows="5"
+									cols="50" />
+								<p:message id="msgHistorico" for="historico" />
+							</pm:field>
+
+							<h:outputText
+								value=" * Inclua campeonatos disputados, títulos e série"
+								style="text-align: center; display: block; margin-top: 10px;"
+								colspan="1" />
+						</h:panelGrid>
+					</p:tab>
+
+					<p:tab title="Foto">
+						<div
+							style="display: flex; justify-content: left; margin-top: 20px;">
+							<h:panelGrid id="painelUpload" columns="1"
+								style="border-style: none; padding: 20px; border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+
+								<p:outputLabel for="foto" value="Foto do Clube"
+									style="text-align: left; display: block;" />
+
+								<p:fileUpload id="foto" mode="simple" skinSimple="true" process="@this"
+									allowTypes="/(\.|\/)(gif|png|jpe?g|heic|webp)$/i"  multiple="false"
+									invalidFileMessage="Arquivo inválido. Apenas imagens GIF, PNG ou JPG são permitidas."
+									sizeLimit="1048576" auto="true"
+									invalidSizeMessage="O tamanho máximo do arquivo é de 1MB."
+									listener="#{cadastroClubeBean.handleFileUpload}"
+									update="painelUpload">
+									
+								</p:fileUpload>
+								<p:message for="foto" id="msgFoto" />
+								
+								<p:graphicImage id="fotoPreview"
+									value="http://#{request.serverName}/progle/fotos/#{cadastroClubeBean.fileNameFoto}" alt="Foto do jogador"
+									style="max-width: 100%; margin: auto;"
+									rendered="#{not empty cadastroClubeBean.fileNameFoto}" />
+								
+							</h:panelGrid>
+						</div>
+					</p:tab>
+
+				</p:accordionPanel>
+				
+				<br />
+				
+				<pm:field>
+					<div class="card">
+						<p:commandButton value="Termo de condições de acesso"
+							type="button" icon="pi pi-external-link"
+							onclick="PF('dlg1').show()" update="formDialogTermo"
+							alt="Leia o termo e aceite para poder se cadastrar" />
+					</div>
+				</pm:field>
+
+				<p:commandButton id="btnCadastroClube" value="Concluir cadastro"
+					disabled="#{not cadastroClubeBean.aceitouTermos}"
+					action="#{cadastroClubeBean.criar}" update="@form"
+					styleClass="botao-entar"  icon="fa fa-user-plus"/>
+
+			</h:panelGrid>
+		</h:form>
+
+		<p:dialog id="dlg1" header="Termos e condições" widgetVar="dlg1"
+			minHeight="40" width="90%" height="400" showEffect="fade"
+			modal="true" closeOnEscape="true"
+			style="background-color: white; color: black;">
+
+			<div
+				style="max-height: 80%; overflow-y: auto; padding-right: 10px; ">
+				<p class="m-0">Seja bem-vindo à PROOGLE. Estes Termos Gerais de
+					Uso (“TERMOS”) regulam o acesso e a utilização, por pessoas físicas
+					ou jurídicas (“USUÁRIO”), dos aplicativos, websites, conteúdos e
+					demais serviços (“SERVIÇOS”) disponibilizados pela PROOGLE
+					ATIVIDADES ESPORTIVAS E FORMAÇÃO DE ATLETAS LTDA., pessoa jurídica
+					de direito privado, inscrita no CNPJ sob o nº 48.027.698/0001-65. A
+					PROOGLE tem como missão democratizar o acesso ao futebol, promover
+					a igualdade de oportunidades, incentivar a competitividade e
+					proporcionar geração de renda adicional aos seus usuários. Este
+					documento explica como utilizar nossas plataformas e os princípios
+					que regem nossa relação com você, USUÁRIO. É essencial que você
+					leia com atenção e compreenda os presentes TERMOS antes de utilizar
+					qualquer um de nossos SERVIÇOS. Ao acessar e utilizar as
+					plataformas da PROOGLE, você declara ter lido, compreendido e
+					aceitado todas as condições aqui estabelecidas. Caso não esteja de
+					acordo com algum dos dispositivos destes TERMOS, orientamos que
+					interrompa o uso de nossos SERVIÇOS e solicite o cancelamento do
+					seu cadastro. A continuidade de uso dos SERVIÇOS será interpretada
+					como aceitação tácita e integral destes TERMOS. A PROOGLE poderá, a
+					seu critério, modificar estes TERMOS a qualquer momento. As
+					alterações passarão a valer a partir da data de publicação da nova
+					versão neste espaço ou dentro do próprio aplicativo. O uso contínuo
+					dos SERVIÇOS após tais atualizações implicará concordância do
+					USUÁRIO com os novos termos. Ao aceitar os presentes TERMOS, você
+					concorda que eles substituem todos os contratos, acordos ou
+					entendimentos anteriores firmados entre você e a PROOGLE, verbais
+					ou escritos, relacionados aos mesmos SERVIÇOS. A PROOGLE também se
+					reserva o direito de encerrar, suspender ou limitar, a qualquer
+					momento e sem necessidade de justificativa, o acesso de qualquer
+					USUÁRIO aos SERVIÇOS, parcial ou integralmente. 1 – SERVIÇOS 1.1 A
+					PROOGLE oferece um serviço de intermediação que conecta praticantes
+					de futebol amador (“CONTRATANTES”) que necessitam de jogadores,
+					treinadores ou árbitros para compor partidas, com pessoas
+					disponíveis e interessadas em prestar esse tipo de serviço
+					esportivo (“CONTRATADOS”). O agendamento dessas participações
+					ocorre por meio da plataforma digital da PROOGLE (“APP”), que
+					organiza os dados de local, data, horário e valor previamente
+					definidos pelas partes. A PROOGLE, portanto, não é parte da relação
+					contratual entre CONTRATANTE e CONTRATADO, atuando apenas como
+					facilitadora e organizadora do encontro entre as partes
+					(“SERVIÇO”). 1.2 Ao utilizar os serviços da PROOGLE, o USUÁRIO
+					declara expressamente ter plena capacidade legal para contratar nos
+					termos da legislação vigente. É vedado o uso da plataforma por
+					pessoas absolutamente incapazes, em especial menores de 16 anos,
+					sob pena de suspensão imediata do acesso às PLATAFORMAS e nulidade
+					do ato de contratação. 2 – Uso dos Serviços 2.1. Para utilizar o
+					SERVIÇO, o USUÁRIO deve realizar o download do APP e preencher o
+					CADASTRO com as seguintes informações: nome completo, CPF ou CNPJ,
+					data de nascimento, e-mail, número de telefone celular e endereço.
+					A depender do tipo de contratação do USUÁRIO serão ainda
+					solicitados os seguintes dados adicionais: gênero, raio da área de
+					atuação e dados bancários. 2.4. O USUÁRIO, ao se cadastrar, criará
+					login e senha para acesso ao APP, que disponibilizará somente 01
+					(um) CADASTRO ativo. O USUÁRIO não poderá autorizar terceiros a
+					usarem seu CADASTRO, não poderá cedê-lo ou transferi-lo a nenhuma
+					pessoa ou entidade e se compromete a informar imediatamente a
+					PROOGLE caso verifique utilização ou conhecimento destas
+					informações por terceiros, sob pena de responder por eventuais
+					fraudes ou prejuízos praticados em seu nome. 2.3. A PROOGLE se
+					reserva ao direito de utilizar todos os meios possíveis e lícitos
+					para identificação e confirmação de identidade do USUÁRIO e seus
+					dados cadastrais, tais como, mas sem se limitar, confirmação do
+					e-mail válido, envio de mensagens para número do celular cadastrado
+					e realização de ligações telefônicas, caso necessárias. O acesso
+					aos SERVIÇOS será negado caso o USUÁRIO se recuse a realizar a
+					confirmação de identidade. 2.4.1. Caso a senha de acesso venha a
+					ser esquecida pelo USUÁRIO, o APP permite que este promova a
+					solicitação de recuperação de conta mediante a confirmação de dados
+					pessoais. Entretanto, a recuperação de acesso não é garantida,
+					estando a PROOGLE isenta de quaisquer responsabilidades em relação
+					a eventuais prejuízos do USUÁRIO decorrentes da impossibilidade de
+					recuperação da conta, seja pela impossibilidade de identificar sua
+					propriedade ou qualquer outra razão. 2.2. O USUÁRIO concorda em
+					manter informações corretas, completas e atualizadas em seu
+					CADASTRO. Se o USUÁRIO não mantiver informações corretas, completas
+					e atualizadas em seu CADASTRO, inclusive em se tratando de dados de
+					pagamento, o USUÁRIO poderá ficar impossibilitado de acessar os
+					SERVIÇOS. Caso a PROOGLE tome conhecimento, por meios próprios ou
+					denúncias, da falsidade ou inexatidão dos dados fornecidos no
+					cadastro, o USUÁRIO poderá ter seu cadastro suspenso, bloqueado ou
+					excluído, a critério da PROOGLE, sem prejuízo de responder civil e
+					criminalmente por suas ações ou omissões. Nesses casos, todas as
+					condições adicionais do SERVIÇO, tal como entrega de prêmios ou
+					transferência de saldo ficará prejudicada. 3 – Funcionalidades e
+					Garantias Oferecidas ao Usuário 3.1. Ao se cadastrar na PROOGLE, o
+					USUÁRIO passa a contar com os seguintes recursos disponibilizados
+					exclusivamente via aplicativo: a) acesso à intermediação de
+					partidas de futebol sob demanda; b) inclusão de seu perfil no banco
+					de dados da plataforma, permitindo ser localizado por CONTRATANTES
+					interessados em jogadores, técnicos ou árbitros; c) recebimento de
+					oportunidades de jogos conforme região e disponibilidade, mediante
+					retenção de comissão ou pagamento de assinatura mensal; d) gestão
+					dos pagamentos por meio de plataformas financeiras terceirizadas;
+					e) visualização do próprio desempenho no ranking geral de USUÁRIOS,
+					acessível também pelos CONTRATANTES; f) suporte técnico oferecido
+					via aplicativo, e-mail (proogle@) e WhatsApp ( ), voltado à
+					operação da plataforma e resolução de dúvidas sobre jogos aceitos
+					ou realizados. 3.2. As notificações de partidas disponíveis são
+					enviadas exclusivamente por meio do APP, podendo ocorrer a qualquer
+					hora, todos os dias da semana. 3.3. O USUÁRIO tem total liberdade
+					para aceitar ou recusar as partidas ofertadas, sem qualquer
+					penalidade em caso de recusa. 3.3.1. No entanto, ao confirmar
+					presença em uma partida e não comparecer, o USUÁRIO reconhece que
+					poderá: – receber uma penalização em sua pontuação no ranking, –
+					ter seu perfil temporariamente suspenso, – sofrer a aplicação de
+					multa automática, com desconto direto em sua conta. Os critérios
+					específicos para pontuação, suspensão e valores aplicáveis estão
+					descritos nestes TERMOS. 3.3.2. Para os efeitos deste contrato,
+					considera-se “aceite” toda confirmação por parte do USUÁRIO para
+					atuar em determinada partida, nos termos propostos pelo APP. 3.4. A
+					prestação de serviço pelo USUÁRIO ocorre de forma autônoma e
+					flexível, sem exigência de horários fixos ou presença em locais
+					determinados pela PROOGLE, cabendo exclusivamente ao USUÁRIO
+					organizar sua agenda de atendimentos. 3.5. O USUÁRIO declara estar
+					ciente de que não existe vínculo empregatício com a PROOGLE. Dessa
+					forma, é o único responsável por seus equipamentos, locomoção,
+					integridade física e demais custos relacionados à sua participação
+					em partidas. 3.6. Ao utilizar o APP, o USUÁRIO autoriza
+					expressamente o uso de sua imagem (fotos, vídeos, áudios e demais
+					materiais compartilhados) para fins promocionais e publicitários da
+					PROOGLE 4 – INFORMAÇÕES CADASTRADAS PELOS USUÁRIOS 4.1. Todas as
+					informações fornecidas no cadastro e nos perfis dos USUÁRIOS,
+					especialmente dados pessoais e qualificações profissionais dos
+					CONTRATADOS, são inseridas diretamente por eles na plataforma. A
+					PROOGLE não realiza verificação prévia das informações prestadas,
+					motivo pelo qual não assume qualquer responsabilidade pela
+					veracidade, exatidão ou atualização desses dados. 5 – SISTEMA DE
+					AVALIAÇÕES 5.1. A PROOGLE disponibiliza no APP um sistema de
+					avaliação que permite aos USUÁRIOS darem feedbacks sobre a conduta
+					e desempenho de outros USUÁRIOS, tanto CONTRATANTES quanto
+					CONTRATADOS, após a realização de uma partida. 5.1.1. Ao utilizar
+					os SERVIÇOS, o USUÁRIO declara estar de acordo com a exibição
+					pública de suas avaliações no ambiente do aplicativo. 5.2. Caso
+					receba avaliações negativas ou reclamações, o USUÁRIO poderá ser
+					contatado pela equipe da PROOGLE, com o objetivo de entender os
+					motivos e circunstâncias do ocorrido. 5.3. A PROOGLE, no entanto,
+					não se compromete a auditar ou confirmar a veracidade das
+					avaliações feitas entre os USUÁRIOS, tampouco se responsabiliza
+					pelo conteúdo dessas opiniões. 5.4. Em caso de reincidência de
+					avaliações negativas sem justificativa plausível, a PROOGLE poderá,
+					a seu critério, aplicar medidas como advertência, suspensão
+					temporária ou exclusão definitiva da conta do USUÁRIO envolvido. 6
+					– SOBRE OS VALORES E FORMAS DE PAGAMENTO 6.1. Ao solicitar a
+					presença de um CONTRATADO para uma partida, o CONTRATANTE declara
+					estar ciente de que o serviço será remunerado conforme o valor
+					indicado no aplicativo, levando em conta local, tipo de campo e
+					duração da partida (“PREÇO”). 6.3. O valor informado inclui tanto a
+					remuneração do CONTRATADO quanto uma estimativa de deslocamento,
+					calculada automaticamente com base na distância percorrida. 6.5. O
+					pagamento será processado via PIX, através de link gerado
+					automaticamente no aplicativo, logo após a confirmação da
+					solicitação. 6.2. O valor será cobrado somente após a confirmação
+					do serviço. Uma vez aceito pelo CONTRATADO, ele deve comparecer na
+					data, hora e local previamente combinados. 6.4. A PROOGLE não se
+					responsabiliza por falhas nas plataformas de pagamento utilizadas,
+					mas poderá, por gentileza, prestar suporte ao USUÁRIO caso surjam
+					problemas técnicos que afetem a transação. 7 – SOBRE A COMISSÃO DA
+					PROOGLE 7.1. Pela intermediação prestada conforme descrito nas
+					cláusulas 1.1 e 3.1 destes TERMOS, a PROOGLE retém uma comissão de
+					25% do valor total pago pelo CONTRATANTE, antes do repasse ao
+					CONTRATADO. 7.3. Esse percentual poderá variar de acordo com a
+					frequência de uso do aplicativo e campanhas promocionais futuras,
+					conforme políticas internas da PROOGLE. 7.2. A comissão cobre os
+					custos operacionais da PROOGLE, incluindo impostos e taxas
+					bancárias associadas à intermediação. 7.4. A PROOGLE e seus
+					parceiros poderão, eventualmente, oferecer serviços adicionais,
+					cujas condições e preços serão apresentados em contratos ou TERMOS
+					específicos. 7.5. Funcionalidades declaradas como gratuitas
+					continuarão sem custo adicional 8 – DA LIBERAÇÃO DOS VALORES 8.1. O
+					CONTRATADO receberá os valores devidos pela realização dos jogos
+					intermediados pelo APP, já com o desconto da COMISSÃO estabelecida
+					nestes TERMOS, em até 7 (sete) dias corridos após a realização da
+					partida que originou o crédito. 8.2. Todas as informações sobre os
+					valores acumulados, previsões de liberação e movimentações
+					financeiras estarão disponíveis ao CONTRATADO no menu “PAGAMENTO”
+					do APP, onde constará seu extrato detalhado. 8.3. Após a liberação
+					do valor para saque, o CONTRATADO poderá solicitar, a qualquer
+					momento, a transferência dos recursos para sua conta bancária de
+					titularidade previamente cadastrada no APP. Não serão autorizadas
+					transferências para contas de terceiros, sob nenhuma hipótese.
+					8.3.1. Até que a solicitação de saque seja efetivada, os valores
+					permanecerão vinculados à conta do USUÁRIO na plataforma, sendo
+					mantidos em caráter de adiantamento, sem qualquer tipo de
+					rendimento ou correção monetária. 9 – DA POLÍTICA DE LEGALIDADE E
+					PENALIDADES 9.1. É terminantemente vedada qualquer conduta por
+					parte dos USUÁRIOS, tanto no ambiente virtual das PLATAFORMAS
+					quanto fora delas (incluindo durante as partidas), que configure:
+					a) agressão física ou verbal contra outros USUÁRIOS ou qualquer
+					pessoa envolvida nas partidas; b) violação de normas legais,
+					regulamentos, portarias ou demais instrumentos normativos
+					aplicáveis; c) envolvimento em transações ilícitas, incluindo a
+					oferta ou promoção de serviços ou produtos ilegais, bem como
+					qualquer incentivo a terceiros para a prática de atividades
+					ilegais; d) uso indevido de conteúdo protegido por direitos
+					autorais, segredos comerciais, industriais ou quaisquer direitos de
+					terceiros; e) publicação, compartilhamento ou disseminação de
+					conteúdo ofensivo, abusivo, discriminatório, obsceno ou que
+					represente assédio, intimidação, discurso de ódio ou invasão de
+					privacidade, com base em raça, etnia, religião, gênero, orientação
+					sexual, idade, deficiência ou qualquer outra condição. f)
+					discriminação, difamação, intimidação etc.; g) divulgação, menção
+					ou apologia a quaisquer serviços ilegais ou venda de quaisquer
+					itens cujo comércio e propaganda sejam proibidos ou restritos por
+					lei; h) Utilização de vírus ou qualquer outro código malicioso,
+					arquivos ou programas projetados para interromper, espionar,
+					destruir, limitar ou ampliar a funcionalidade das PLATAFORMAS. 9.2.
+					A listagem prevista no item 10.1, acima, possui caráter meramente
+					exemplificativo e não exaustivo. 9.3. Qualquer USUÁRIO que
+					desrespeitar os compromissos previstos nesta Cláusula estará
+					sujeito às sanções previstas nestes TERMOS. 10 – COMUNICAÇÕES,
+					PRIVACIDADE E TRATAMENTO DE DADOS 10.1. Quaisquer manifestações dos
+					USUÁRIOS, incluindo reclamações, críticas, sugestões ou elogios,
+					tanto relacionados à PROOGLE quanto aos demais USUÁRIOS da
+					plataforma, deverão ser direcionadas pelos canais oficiais de
+					atendimento: a) via APP, na seção “Suporte Técnico”; b) por e-mail:
+					oseujogador@proogle.com.br 10.2. A PROOGLE poderá intervir nas
+					situações relatadas, desde que acompanhadas de indícios mínimos de
+					veracidade ou comprovação plausível, sendo certo que não está
+					obrigada a atuar sem tais fundamentos. 10.3. O USUÁRIO declara
+					estar ciente e concorda que a PROOGLE realiza o tratamento de seus
+					dados pessoais com base na Lei nº 13.709/2018 – Lei Geral de
+					Proteção de Dados Pessoais (LGPD), exclusivamente para fins
+					vinculados à execução dos SERVIÇOS, segurança da plataforma,
+					cumprimento de obrigações legais, melhoria da experiência do
+					USUÁRIO e proteção dos direitos dos envolvidos. 10.4. Os dados
+					tratados (“DADOS PROTEGIDOS”) compreendem, mas não se limitam a:
+					nome, CPF ou CNPJ, endereço de e-mail, telefone, endereço IP,
+					localização, informações de acesso e utilização da plataforma,
+					registros de partidas, avaliações e preferências de uso. 10.5. O
+					USUÁRIO concorda expressamente que a PROOGLE poderá compartilhar os
+					DADOS PROTEGIDOS com terceiros nos seguintes casos: a) quando
+					necessário à prestação dos SERVIÇOS; b) para cumprimento de
+					obrigações legais, administrativas ou judiciais; c) para proteger
+					direitos, propriedade ou segurança da PROOGLE, dos USUÁRIOS ou de
+					terceiros; d) em situações que envolvam denúncia de uso indevido,
+					violação de direitos ou comportamento inadequado, inclusive em
+					partidas. 10.6. Os DADOS PROTEGIDOS permanecerão armazenados apenas
+					pelo tempo necessário às finalidades que justificaram sua coleta,
+					sendo possível ao USUÁRIO solicitar, por meio dos canais de
+					atendimento, o descarte, a portabilidade, a correção ou a limitação
+					de uso dos seus dados, conforme assegurado pela LGPD. 10.7. Em caso
+					de cancelamento de conta ou exclusão de cadastro, a PROOGLE poderá
+					manter os dados mínimos necessários para evitar novos cadastros
+					indevidos e garantir a integridade da plataforma, mesmo após
+					solicitação de descarte, sempre respeitando os limites legais. 11 –
+					DOS DIREITOS DE PROPRIEDADE INTELECTUAL- 11.1. Todos os elementos
+					presentes nas PLATAFORMAS, incluindo marcas, nomes comerciais,
+					logotipos, domínios, layout, design, textos, imagens, vídeos,
+					gráficos e qualquer outro conteúdo, são de titularidade exclusiva
+					de a PROOGLE ou licenciados por terceiros, e estão protegidos pelas
+					leis de propriedade intelectual vigentes no Brasil e em outros
+					países. 11.2. O simples acesso às PLATAFORMAS ou a contratação dos
+					SERVIÇOS não concede ao USUÁRIO qualquer direito de uso, licença ou
+					cessão sobre tais elementos. É proibida qualquer forma de
+					reprodução, distribuição, modificação, engenharia reversa, exibição
+					ou exploração sem autorização expressa de a PROOGLE. 11.3. O uso
+					não autorizado de qualquer conteúdo das PLATAFORMAS poderá
+					acarretar responsabilidade civil e/ou criminal, conforme a
+					legislação aplicável. 11.4. Caso o USUÁRIO envie sugestões,
+					comentários ou feedbacks a respeito das PLATAFORMAS ou dos
+					SERVIÇOS, esses poderão ser livremente utilizados pela PROOGLE, sem
+					que isso gere qualquer obrigação de remuneração ou reconhecimento
+					ao USUÁRIO. 12 – DA QUALIDADE DOS SERVIÇOS PRESTADOS PELOS
+					CONTRATADOS 12.1. A PROOGLE atua exclusivamente como intermediadora
+					na conexão entre CONTRATADOS e CONTRATANTES. Assim, não se
+					responsabiliza pela qualidade técnica, desempenho ou habilidades
+					específicas dos CONTRATADOS durante os jogos. 12.2. A obrigação
+					essencial do CONTRATADO é o comparecimento no local, data e horário
+					previamente combinados com o CONTRATANTE. O não comparecimento está
+					sujeito às penalidades previstas neste Termo. 13 – RESPONSABILIDADE
+					POR DANOS E OBRIGAÇÃO DE RESSARCIMENTO 13.1. O USUÁRIO concorda em
+					ressarcir integralmente a Proogle, seus representantes legais,
+					parceiros, colaboradores e demais envolvidos, por quaisquer
+					prejuízos, despesas ou perdas decorrentes de: (i) uso inadequado ou
+					indevido das PLATAFORMAS; (ii) descumprimento de cláusulas
+					previstas neste Termo; ou (iii) infrações a direitos de terceiros,
+					inclusive direitos autorais, de imagem, propriedade ou privacidade.
+					Essa obrigação permanece válida mesmo após a desativação da conta
+					ou término do vínculo com a Proogle. 13.2. Se a Proogle vier a ser
+					responsabilizada judicialmente por atos praticados por um USUÁRIO
+					que resultem em prejuízo a terceiros, poderá buscar judicialmente o
+					ressarcimento integral dos valores pagos, bem como adotar todas as
+					medidas legais cabíveis para assegurar seus direitos. 14 – DAS
+					RESPONSABILIDADES 14.1. O USUÁRIO reconhece e concorda que a
+					Proogle atua unicamente como intermediadora na conexão entre
+					CONTRATANTES e CONTRATADOS para a prestação de serviços esportivos
+					temporários, não assumindo responsabilidade pela conduta,
+					desempenho técnico ou habilidades dos USUÁRIOS cadastrados na
+					plataforma. 14.2. A Proogle não se responsabiliza por acordos ou
+					transações realizados fora do ambiente da plataforma. Sua
+					responsabilidade limita-se ao bom funcionamento das ferramentas
+					disponibilizadas no aplicativo, à mediação de eventuais conflitos e
+					à guarda das informações relacionadas às contratações efetuadas por
+					meio do sistema. 14.3. O USUÁRIO deve adotar uma postura ética e
+					profissional, evitando qualquer atitude que possa prejudicar a
+					reputação da Proogle. Em caso de exposição negativa em canais como
+					Reclame Aqui, redes sociais, órgãos de defesa do consumidor ou
+					veículos de imprensa, o USUÁRIO compromete-se a colaborar para a
+					solução do problema, visando à remoção da reclamação e à reparação
+					dos danos causados. 14.4. O USUÁRIO compreende que a Proogle não
+					será responsabilizada por perdas, danos ou prejuízos decorrentes de
+					contratações realizadas entre CONTRATANTE e CONTRATADO, ainda que
+					intermediadas pela plataforma. 14.5. É obrigação do USUÁRIO cumprir
+					as diretrizes previstas no Termo de Compromisso e Confidencialidade
+					de Informações, cuja aceitação é condição para acesso e uso das
+					PLATAFORMAS. 15 – DO ENCERRAMENTO DO SERVIÇO 15.1. A Proogle
+					reserva-se o direito de, a qualquer momento e por decisão
+					exclusiva, suspender, desativar ou encerrar o acesso do USUÁRIO à
+					plataforma, bem como bloquear seu e-mail, endereço de IP ou conta,
+					sem necessidade de aviso prévio ou justificativa formal. 15.2. O
+					USUÁRIO está ciente de que sua permanência na plataforma está
+					condicionada ao cumprimento dos critérios técnicos estabelecidos.
+					Caso suas avaliações demonstrem desempenho insuficiente para a
+					função exercida, sua conta poderá ser suspensa de forma definitiva.
+					16 – DA TRANSFERÊNCIA DE DIREITOS 16.1. É vedado ao USUÁRIO ceder,
+					transferir ou negociar, total ou parcialmente, quaisquer direitos e
+					obrigações assumidos neste Termo, sem a autorização expressa e por
+					escrito da Proogle. 17 – DAS REGRAS GERAIS, LEGISLAÇÃO APLICÁVEL E
+					RESOLUÇÃO DE DISPUTAS COM A PROOGLE 17.1. O USUÁRIO reconhece que
+					qualquer infração a estes Termos e Condições, ainda que sem
+					penalidade expressamente prevista, poderá acarretar o pagamento de
+					multa não compensatória no valor de R$ 700,00 (setecentos reais)
+					por ocorrência, corrigida anualmente com base no IGP-M/FGV ou outro
+					índice oficial equivalente, além de eventuais indenizações por
+					perdas e danos e a possibilidade de suspensão ou exclusão de sua
+					conta na plataforma. 17.2. Estes Termos não estabelecem entre a
+					PROOGLE, CONTRATANTES e CONTRATADOS qualquer relação societária,
+					vínculo associativo, representação, agência, parceria ou
+					responsabilidade solidária. 17.3. A eventual tolerância da PROOGLE
+					quanto ao descumprimento, por parte do USUÁRIO, de qualquer
+					cláusula destes Termos e Condições será interpretada como mera
+					liberalidade, não configurando renúncia a direito, perdão ou
+					modificação contratual. 17.4. Na hipótese de que qualquer
+					disposição destes Termos venha a ser considerada inválida, ilegal
+					ou inexequível, tal fato não afetará as demais disposições, que
+					permanecerão válidas e em pleno vigor. 17.5. Estes Termos e
+					Condições, juntamente com demais políticas e comunicados
+					disponibilizados pela PROOGLE, representam o acordo integral entre
+					as partes, substituindo quaisquer entendimentos prévios, verbais ou
+					escritos. 17.6. As partes se comprometem, sempre que possível, a
+					resolver de boa-fé e de maneira amigável quaisquer divergências ou
+					controvérsias que possam surgir em decorrência do uso das
+					PLATAFORMAS ou da aplicação destes Termos. 17.7 Caso não seja
+					possível uma solução extrajudicial, as partes elegem, desde já, o
+					Foro da Comarca de Santo André, Estado de São Paulo, como o único
+					competente para dirimir quaisquer litígios ou controvérsias
+					decorrentes ou relacionados a este instrumento, com renúncia
+					expressa a qualquer outro foro, por mais privilegiado que seja.</p>
+			</div>
+			<h:form id="formDialogTermo" style="margin-top: 25px;" >
+				<p:selectBooleanCheckbox id="aceitouTermos" class="termos"
+					value="#{cadastroClubeBean.aceitouTermos}">
+					<p:ajax process="@this" event="valueChange"
+						update=":formCadastro:btnCadastroClube" />
+				</p:selectBooleanCheckbox>
+				<h:outputLabel for="aceitouTermos" class="termos"
+					value="Aceito os termos e condições"  style="margin-left: 10px;"/>
+				<p:commandButton value="Fechar" type="button" style="display: flex; justify-content: center; margin-top: 15px; margin-bottom: 10px;"
+						styleClass="button-arredondado" onclick="PF('dlg1').hide();"
+						update=":formCadastroJogador:btnCadastroJogador" />
+			</h:form>
+		</p:dialog>
+
+
+		<p:dialog id="dlgMap" widgetVar="dlgMap" modal="true"
+			draggable="false" resizable="false" header="Localização"
+			appendTo="@(body)" responsive="true" styleClass="map-dlg"
+			minHeight="40" width="90%" height="200" showEffect="fade"
+			closeOnEscape="true" style="background-color: white; color: black;">
+
+			<h:form id="formMap">
+
+				<div class="map-wrap"
+					style="max-height: 90%; overflow-y: auto; padding-right: 10px;">
+
+					<iframe id="mapFrame" src="#{cadastroClubeBean.linkGoogleMaps}"
+						class="map-iframe" loading="lazy"
+						referrerpolicy="no-referrer-when-downgrade" allowfullscreen="true">
+					</iframe>
+
+					<br />
+
+					<div class="card">
+
+						<p:commandButton value="Fechar" type="button"
+							styleClass="button-arredondado" onclick="PF('dlgMap').hide();"
+							update=":formCadastro:btnCadastroClube" />
+					</div>
+					
+				</div>
+			</h:form>
+
+		</p:dialog>
+
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,167 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:custom="http://customjsf.consult.inf.br/facelets/taglibs"
+	xmlns:composite="http://java.sun.com/jsf/composite/componentes"
+	template="/templates/template.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="idConvocacao" value="#{pagamentoJogadorBean.idConvocacao}" />
+		<f:viewParam name="idJogador" value="#{pagamentoJogadorBean.idJogador}" />
+		<f:event type="preRenderView"
+			listener="#{pagamentoJogadorBean.buscarConvocacaoPorId}" />
+	</f:metadata>
+
+
+	<ui:define name="content">
+		<h:form id="formPagamento"
+			style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 100%; padding: 20px;">
+			<div
+				style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+
+				<h:panelGrid id="painelConfirmacao" columns="1"
+					styleClass="custom-panel">
+
+					<h:panelGroup>
+						<div class="profile-info">
+							<h3>Informações Pessoais do Jogador</h3>
+							<div class="info-item">
+								<h:outputText value="Nome: #{pagamentoJogadorBean.jogadorDTO.nome}" />
+							</div>
+							<div class="info-item"
+								rendered="#{not empty pagamentoJogadorBean.jogadorDTO.apelido}">
+								<h:outputText
+									value="Apelido: #{pagamentoJogadorBean.jogadorDTO.apelido}" />
+							</div>
+							<div class="info-item">
+								<h:outputText
+									value="Valor de Aluguel: #{pagamentoJogadorBean.jogadorDTO.valorAluguel}" />
+							</div>
+						</div>
+					</h:panelGroup>
+
+					<h:panelGroup
+						rendered="#{not empty pagamentoJogadorBean.jogadorDTO.dadosBancariosDTO.banco}">
+						<div class="profile-info">
+							<h3>Dados Bancários</h3>
+							<div class="info-item">
+								<h:outputLabel
+									value="Banco: #{pagamentoJogadorBean.jogadorDTO.dadosBancariosDTO.banco}" />
+							</div>
+							<div class="info-item">
+								<h:outputLabel
+									value="Número da conta: #{pagamentoJogadorBean.jogadorDTO.dadosBancariosDTO.numeroConta}" />
+							</div>
+							<div class="info-item">
+								<h:outputLabel
+									value="Agência: #{pagamentoJogadorBean.jogadorDTO.dadosBancariosDTO.agencia}" />
+							</div>
+						</div>
+					</h:panelGroup>
+					<h:panelGroup
+						rendered="#{not empty pagamentoJogadorBean.jogadorDTO.dadosBancariosDTO.chavePix}">
+						<div class="profile-info">
+							<h3>Informações Pix</h3>
+
+							<div class="info-item"
+								style="display: flex; align-items: center;">
+								<h:outputText value="Chave Pix: " />
+
+								<h:outputText id="txtChavePix" style="margin-left: 3.5px"
+									value="#{pagamentoJogadorBean.jogadorDTO.dadosBancariosDTO.chavePix}"
+									styleClass="hidden-input" />
+
+								<p:commandButton id="btnCopy" icon="pi pi-copy"
+									style="margin-left: 10px; height: 25px; padding: 5px 10px;">
+
+									<pe:clipboard id="clipCopy" trigger="btnCopy" action="copy"
+										target="txtChavePix"
+										onComplete="PF('clipboardWidget').copy();"
+										onError="alert('Erro ao copiar.');" />
+								</p:commandButton>
+							</div>
+							<div class="info-item">
+								<h:outputLabel
+									value="Tipo de Chave Pix: #{pagamentoJogadorBean.jogadorDTO.dadosBancariosDTO.tipoChavePix}" />
+							</div>
+						</div>
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<div class="profile-info">
+							<h3>Endereço da Partida</h3>
+							<div class="info-item">
+								<h:outputLabel
+									value="CEP: #{pagamentoJogadorBean.convocacaoDTO.enderecoDTO.cep}" />
+								<h:outputLabel
+									value=" Rua: #{pagamentoJogadorBean.convocacaoDTO.enderecoDTO.rua}" />
+								<h:outputLabel
+									value=" Número: #{pagamentoJogadorBean.convocacaoDTO.enderecoDTO.numero}" />
+							</div>
+							<div class="info-item">
+								<h:outputLabel
+									value="Bairro: #{pagamentoJogadorBean.convocacaoDTO.enderecoDTO.bairro}" />
+								<h:outputLabel
+									value=" Cidade: #{pagamentoJogadorBean.convocacaoDTO.enderecoDTO.cidade}" />
+							</div>
+							<div class="info-item">
+								<h:outputLabel
+									value="Estado: #{pagamentoJogadorBean.convocacaoDTO.enderecoDTO.estado}" />
+							</div>
+						</div>
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<div class="profile-info">
+							<h3>Informações da Convocação</h3>
+							<div class="info-item">
+								<h:outputText
+									value="Data da Partida: #{pagamentoJogadorBean.convocacaoDTO.dataPartida}">
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+								</h:outputText>
+							</div>
+							<div class="info-item">
+								<h:outputText
+									value="Tipo de Jogo: #{pagamentoJogadorBean.convocacaoDTO.tipoJogo}" />
+							</div>
+
+						</div>
+					</h:panelGroup>
+
+
+					<h:panelGroup id="panelMetodoPagamento" layout="block"
+						style="margin-top: 20px; margin-bottom: 40px;">
+						<h:outputLabel value="Método de Pagamento:" for="metodoPagamento"
+							style="font-size: 18px; font-weight: bold;" />
+
+						<p:selectOneMenu id="metodoPagamento"
+							value="#{pagamentoJogadorBean.opcaoEscolhida}"
+							style="width: 100%; margin-top: 10px;">
+							<f:selectItem itemLabel="Selecione" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{pagamentoJogadorBean.metodoPagamentoOptions}"
+								var="metodo" itemLabel="#{metodo}" itemValue="#{metodo}" />
+						</p:selectOneMenu>
+					</h:panelGroup>
+
+
+					<p:fileUpload value="#{pagamentoJogadorBean.comprovanteUpload}"
+						mode="advanced" dragDropSupport="true"
+						allowTypes="/(\.|\/)(gif|jpe?g|png|pdf)$/" maxFileSize="1048576"
+						auto="false" label="Selecionar comprovante de pagamento"
+						style="display: block; margin-left: auto; margin-right: auto; text-align: center;" />
+
+
+
+					<p:commandButton value="Confirmar convocação" class="botao-entrar"
+						style="width: 60%; font-size: 16px; margin-top: 30px; text-align: center; font-weight: bold; display: block; margin-left: auto; margin-right: auto;"
+						action="#{pagamentoJogadorBean.criar}" ajax="false" />
+
+				</h:panelGrid>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:custom="http://customjsf.consult.inf.br/facelets/taglibs"
+	xmlns:composite="http://java.sun.com/jsf/composite/componentes"
+	template="/templates/template.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="idJogador" value="#{historicoJogadorBean.idJogador}" />
+		<f:event type="preRenderView"
+			listener="#{historicoJogadorBean.buscarJogadorPorId}" />
+	</f:metadata>
+
+	<ui:define name="content">
+		<h:form id="historicoForm">
+			<h1>Hisórico das convocações de clubes</h1>
+			<p:dataTable id="historicoTabela"
+				value="#{historicoJogadorBean.historicoJogadores}" var="historico"
+				paginator="true" rows="10" responsiveLayout="scroll"
+				rowKey="#{historico.idJogador}">
+
+				<p:column headerText="Nome do Clube">
+					<h:outputText value="#{historico.nomeClube}" />
+				</p:column>
+
+
+				<p:column headerText="Data da convocação">
+					<h:outputText
+						value="#{historicoJogadorBean.formatarDataConvocacao(historico.dataDaConvocacao)}" />
+				</p:column>
+
+
+				<p:column headerText="Valor de Contratação">
+					<h:outputText value="#{historico.valor}" />
+				</p:column>
+
+				<p:column headerText="Endereço da partida">
+					<h:outputText value="#{historico.enderecoCompleto}" />
+				</p:column>
+
+				<p:column headerText="Tipo de Jogo">
+					<h:outputText value="#{historico.tipoJogo}" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

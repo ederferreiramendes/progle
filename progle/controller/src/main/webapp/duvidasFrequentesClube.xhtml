@@ -1,0 +1,109 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="idClube" value="#{cadastroClubeBean.idClube}" />
+		<f:event type="preRenderView" listener="#{cadastroClubeBean.buscarClubePorId}" />
+	</f:metadata>
+
+	<ui:define name="content">
+		<h:form id="formCadastroClube" class="tela-cadastro">
+			<h:panelGrid>
+
+				<h2 style="text-align: center; margin-bottom: 20px;">DÚVIDAS FREQUENTES</h2>
+				<p:accordionPanel activeIndex="-1">
+					<p:tab title="Como convocar um jogador, treinador ou árbitro?">
+						<h:outputText style="text-align: left;" escape="false" value="Baixe o aplicativo da Proogle e crie sua conta. Na tela inicial, toque em “Convoque aqui seu JOGADOR/TREINADOR/ÁRBITRO de Aluguel” e siga as instruções para iniciar uma convocação." />
+					</p:tab>
+					<p:tab title="Qual é o valor para alugar um jogador, treinador ou árbitro? E quanto tempo dura a partida?">
+						<h:outputText style="text-align: left;" escape="false" value="O valor é dinâmico e varia conforme localização, tipo de campo, tempo de partida, número de convocados e disponibilidade na região. Após inserir os dados na convocação, o aplicativo apresentará o valor total, já incluindo comissão e taxa de deslocamento." />
+					</p:tab>
+					<p:tab title="Posso adicionar uma taxa extra para aumentar as chances de aceitação?">
+						<h:outputText style="text-align: left;" escape="false" value="Sim. Para convocações feitas com menos de 4 horas de antecedência, o sistema sugerirá a inclusão de uma taxa adicional para aumentar as chances de aceitação." />
+					</p:tab>
+					<p:tab title="Quais são as formas de pagamento?">
+						<h:outputText style="text-align: left;" escape="false" value="As convocações são pagas exclusivamente pelo aplicativo, via cartão de crédito ou PIX. Não é permitido realizar pagamentos diretamente aos convocados." />
+					</p:tab>
+					<p:tab title="É seguro inserir os dados do meu cartão?">
+						<h:outputText style="text-align: left;" escape="false" value="Sim. A Proogle não armazena dados de cartão. Todos os pagamentos são processados em ambiente criptografado por uma plataforma segura." />
+					</p:tab>
+					<p:tab title="O que acontece se nenhum jogador aceitar minha convocação?">
+						<h:outputText style="text-align: left;" escape="false" value="O valor pago ficará disponível como crédito na sua carteira no aplicativo. Você poderá resgatá-lo a qualquer momento acessando: Pagamento > Resgate > Solicitar Resgate." />
+					</p:tab>
+					<p:tab title="E se o convocado não comparecer à partida?">
+						<h:outputText style="text-align: left;" escape="false" value="Avalie o convocado como 'ausente' ao final da partida. Ele será suspenso até análise da justificativa pela equipe da Proogle. O crédito será devolvido à sua carteira. Caso prefira o estorno, acesse: Carteira > Solicitar Reembolso." />
+					</p:tab>
+				</p:accordionPanel>
+
+				<h2 style="text-align: center; margin-bottom: 20px;">FUNCIONALIDADES DO APP</h2>
+				<p:accordionPanel activeIndex="-1">
+					<p:tab title="O aplicativo está disponível na minha cidade?">
+						<h:outputText style="text-align: left;" escape="false" value="Atualmente, a Proogle está disponível no Estado de São Paulo, em fase de expansão para outras regiões do Brasil." />
+					</p:tab>
+					<p:tab title="Qual a diferença entre plano gratuito e plano de assinatura mensal?">
+						<h:outputText style="text-align: left;" escape="false" value="O plano de assinatura oferece benefícios como: maior espaço para inserir informações no perfil (fotos, vídeos, etc.) e destaque nas buscas feitas por contratantes." />
+					</p:tab>
+					<p:tab title="O que significa convocação aleatória e específica?">
+						<h:outputText style="text-align: left;" escape="false" value="Aleatória: o sistema busca automaticamente os profissionais disponíveis mais próximos da partida. Específica: o contratante escolhe um convocado específico (por preferência ou indicação). Caso ele recuse, outros serão convidados." />
+					</p:tab>
+					<p:tab title="Como aceitar uma convocação?">
+						<h:outputText style="text-align: left;" escape="false" value="Você receberá uma notificação com os detalhes da partida. Basta abrir o app e tocar em ACEITAR ou RECUSAR. Antes de aceitar, verifique atentamente data, horário, local e tipo de campo." />
+					</p:tab>
+					<p:tab title="O que significa 'vaga preenchida'?">
+						<h:outputText style="text-align: left;" escape="false" value="Significa que outro convocado aceitou a convocação antes de você." />
+					</p:tab>
+					<p:tab title="Como cancelar uma convocação aceita?">
+						<h:outputText style="text-align: left;" escape="false" value="Após aceitar, você verá a opção Cancelar Presença na tela da partida. Ao cancelar, o contratante será notificado e o convite será reenviado a outros convocados. Atenção: cancelamentos podem resultar em perda de estrelas na sua avaliação ou suspensão da conta, mesmo com 2h de antecedência." />
+					</p:tab>
+					<p:tab title="O que acontece se a partida for cancelada pelo time?">
+						<h:outputText style="text-align: left;" escape="false" value="O time será penalizado e impedido de realizar novas convocações por um período. Se o cancelamento for com menos de 30 minutos de antecedência, o convocado receberá uma taxa fixa de R$10,00 (após análise)." />
+					</p:tab>
+				</p:accordionPanel>
+
+				<h2 style="text-align: center; margin-bottom: 20px;">AVALIAÇÕES E CONDUTAS</h2>
+				<p:accordionPanel activeIndex="-1">
+					<p:tab title="É obrigatório avaliar o convocado após a partida?">
+						<h:outputText style="text-align: left;" escape="false" value="Sim. A avaliação é obrigatória e uma nova convocação só será possível após avaliação da última." />
+					</p:tab>
+					<p:tab title="Como bloquear um convocado?">
+						<h:outputText style="text-align: left;" escape="false" value="Se desejar não receber mais convites daquele profissional, vá até o perfil dele, toque no ícone no canto superior direito e selecione Bloquear." />
+					</p:tab>
+					<p:tab title="Como os convocados são avaliados?">
+						<h:outputText style="text-align: left;" escape="false" value="Ao final da partida, o contratante será convidado a avaliar o convocado. A avaliação é necessária para liberar novas convocações." />
+					</p:tab>
+					<p:tab title="O que acontece em caso de condutas inadequadas?">
+						<h:outputText style="text-align: left;" escape="false" value="Agressões verbais ou físicas resultam em suspensão da conta. Partidas falsas serão canceladas e os pagamentos estornados. É proibido marcar partidas por fora do aplicativo com contatos feitos por meio dele, sob pena de suspensão e multa." />
+					</p:tab>
+					<p:tab title="Fui convidado para jogar por fora do app. O que devo fazer?">
+						<h:outputText style="text-align: left;" escape="false" value="A prática é proibida. Após a primeira convocação, todos recebem o Termo de Responsabilidade. Marcar partidas externas pode gerar suspensão e multa." />
+					</p:tab>
+				</p:accordionPanel>
+
+				<h2 style="text-align: center; margin-bottom: 20px;">PAGAMENTOS AOS CONVOCADOS</h2>
+				<p:accordionPanel activeIndex="-1">
+					<p:tab title="Como recebo os valores das partidas?">
+						<h:outputText style="text-align: left;" escape="false" value="Os pagamentos são liberados na Carteira Digital após 7 dias da partida. Depois disso, solicite transferência para conta bancária ou chave PIX de mesma titularidade. Não são aceitas contas de terceiros ou contas-salário/jurídicas." />
+					</p:tab>
+				</p:accordionPanel>
+
+				<h2 style="text-align: center; margin-bottom: 20px;">REGRAS GERAIS</h2>
+				<p:accordionPanel activeIndex="-1">
+					<p:tab title="Quais tipos de campo estão disponíveis nas convocações?">
+						<h:outputText style="text-align: left;" escape="false" value="Os tipos de campo são: Society (Fut5/Fut7), Suíço/Campo reduzido, Campo 11, Futsal e Areia. O convocado deve usar chuteiras adequadas e pode recusar partidas que não deseja atuar." />
+					</p:tab>
+					<p:tab title="Qual a idade mínima para ser um Jogador de Aluguel?">
+						<h:outputText style="text-align: left;" escape="false" value="A partir de 16 anos. Menores de 16 anos não podem se cadastrar." />
+					</p:tab>
+					<p:tab title="Como excluir minha conta?">
+						<h:outputText style="text-align: left;" escape="false" value="Acesse o menu no canto superior direito do app, toque em Engrenagem > Dados cadastrais > Perfil e contato > Excluir conta." />
+					</p:tab>
+				</p:accordionPanel>
+
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,330 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:custom="http://customjsf.consult.inf.br/facelets/taglibs"
+	xmlns:composite="http://java.sun.com/jsf/composite/componentes"
+	template="/templates/template.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="idJuiz" value="#{cadastroJuizBean.idJuiz}" />
+		<f:event type="preRenderView"
+			listener="#{cadastroJuizBean.buscarJuizPorId}" />
+	</f:metadata>
+
+	<ui:define name="content">
+		<h:form id="formTabelaJuiz" class="tela-cadastro">
+			<h:panelGrid
+				style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+				
+				 <div class="img-login" style="text-align: center; margin-top: 20px;">
+                    <img src="#{request.contextPath}/resources/images/proogle_logo.png"
+                         alt="Logo da Empresa" width="30%" height="30%"
+                         class="h-16 object-contain" />
+                </div>
+				
+				<h1>Editar informações do arbitro</h1>
+				<p:accordionPanel activeIndex="-1">
+					<p:tab title="Dados pessoais">
+						<h:panelGrid id="painelCadastroJuiz" columns="1"
+							class="painelCadastro"
+							style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+							<pm:field>
+								<p:outputLabel for="cpf" value="CPF" />
+								<p:inputText id="cpf" required="true" placeholder="CPF *"
+									disabled="true" value="#{cadastroJuizBean.novoJuiz.cpf}"
+									validatorMessage="CPF inválido">
+									<f:validateRegex pattern="\d{11}" />
+									<p:ajax event="blur" listener="#{cadastroJuizBean.validarCpf}"
+										update="msgCpf" process="@this" />
+								</p:inputText>
+								<p:message for="cpf" id="msgCpf" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="nome" value="Nome" />
+								<p:inputText id="nome" required="true" placeholder="Nome *"
+									value="#{cadastroJuizBean.novoJuiz.nome}" />
+								<p:message id="msgNome" for="nome" />
+							</pm:field>
+
+
+							<pm:field>
+								<p:outputLabel for="contato" value="Whatsapp" />
+								<p:inputMask id="contato" required="true" mask="(99) 99999-9999"
+									placeholder="Whatsapp *"
+									value="#{cadastroJuizBean.novoJuiz.contato}" />
+								<p:message id="msgContato" for="contato" />
+							</pm:field>
+							
+							<pm:field>
+								<p:outputLabel for="instagram" value="Instagram" />
+								<p:inputText id="instagram"
+									placeholder="Instagram "
+									value="#{cadastroJuizBean.novoJuiz.instagram}" />
+								<p:message id="msgInstagram" for="instagram" />
+							</pm:field>		
+														
+
+							<pm:field>
+								<p:outputLabel for="email" value="Email" />
+								<p:inputText id="email" required="true" placeholder="Email*"
+									value="#{cadastroJuizBean.novoJuiz.email}" />
+								<p:message for="email" id="msgEmail" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="nivel" value="Nivel" />
+								<p:selectOneRadio id="nivel" styleClass="custom-radio"
+									value="#{cadastroJuizBean.novoJuiz.nivel}" required="true">
+									<f:selectItem itemLabel="Amador" itemValue="AMADOR" />
+									<f:selectItem itemLabel="Semi-profissional"
+										itemValue="SEMIPROFISSIONAL" />
+								</p:selectOneRadio>
+								<p:message for="nivel" id="msgNivel" />
+							</pm:field>
+							<pm:field>
+								<p:outputLabel for="valorAluguel" value="Valor do aluguel" />
+								<p:inputText id="valorAluguel" required="true"
+									placeholder="Valor do aluguel*"
+									value="#{cadastroJuizBean.novoJuiz.valorAluguel}" />
+								<p:message for="valorAluguel" id="msgValorAluguel" />
+							</pm:field>
+
+						</h:panelGrid>
+					</p:tab>
+
+					<p:tab title="Endereço">
+						<h:panelGrid id="painelCadastroEndereco" columns="1"
+							style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+							<pm:field>
+								<p:outputLabel for="cep" value="CEP" />
+								<p:inputMask id="cep" required="true" placeholder="CEP *" mask="99999-999"
+									value="#{cadastroJuizBean.novoJuiz.enderecoDTO.cep}"
+									validatorMessage="CEP inválido">
+									<p:ajax event="blur"
+										listener="#{cadastroJuizBean.carregarEnderecoPorCep}"
+										update="painelCadastroEndereco" process="@this" />
+								</p:inputMask>
+								<p:message id="msgCep" for="cep" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="estado" value="Estado" />
+								<p:selectOneMenu id="estado" label="Selecione os Estados"
+									value="#{cadastroJuizBean.novoJuiz.enderecoDTO.estado}"
+									styleClass="custom-select" rendered="true">
+									<!--  
+								<f:selectItem itemLabel="AC" itemValue="AC" />
+								<f:selectItem itemLabel="AL" itemValue="AL" />
+								<f:selectItem itemLabel="AM" itemValue="AM" />
+								<f:selectItem itemLabel="AP" itemValue="AP" />
+								<f:selectItem itemLabel="BA" itemValue="BA" />
+								<f:selectItem itemLabel="CE" itemValue="CE" />
+								<f:selectItem itemLabel="DF" itemValue="DF" />
+								<f:selectItem itemLabel="ES" itemValue="ES" />
+								<f:selectItem itemLabel="GO" itemValue="GO" />
+								<f:selectItem itemLabel="MA" itemValue="MA" />
+								<f:selectItem itemLabel="MT" itemValue="MT" />
+								<f:selectItem itemLabel="MS" itemValue="MS" />
+								<f:selectItem itemLabel="MG" itemValue="MG" />
+								<f:selectItem itemLabel="PA" itemValue="PA" />
+								<f:selectItem itemLabel="PB" itemValue="PB" />
+								<f:selectItem itemLabel="PR" itemValue="PR" />
+								<f:selectItem itemLabel="PE" itemValue="PE" />
+								<f:selectItem itemLabel="PI" itemValue="PI" />
+								<f:selectItem itemLabel="RJ" itemValue="RJ" />
+								<f:selectItem itemLabel="RN" itemValue="RN" />
+								<f:selectItem itemLabel="RS" itemValue="RS" />
+								<f:selectItem itemLabel="RO" itemValue="RO" />
+								<f:selectItem itemLabel="RR" itemValue="RR" />
+								<f:selectItem itemLabel="SC" itemValue="SC" /> n-->
+									<f:selectItem itemLabel="SP" itemValue="SP" />
+									<!--  
+								<f:selectItem itemLabel="SE" itemValue="SE" />
+								<f:selectItem itemLabel="TO" itemValue="TO" />-->
+								</p:selectOneMenu>
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="cidade" value="Cidade" />
+								<p:inputText id="cidade" required="true" placeholder="Cidade *"
+									value="#{cadastroJuizBean.novoJuiz.enderecoDTO.cidade}">
+									<f:ajax event="blur" render="linkGoogleMaps" execute="@this" />
+								</p:inputText>
+								<p:message for="cidade" id="msgCidade" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="bairro" value="Bairro" />
+								<p:inputText id="bairro" required="true" placeholder="Bairro *"
+									value="#{cadastroJuizBean.novoJuiz.enderecoDTO.bairro}">
+									<f:ajax event="blur" render="linkGoogleMaps" execute="@this" />
+								</p:inputText>
+								<p:message for="bairro" id="msgBairro" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="rua" value="Rua" />
+								<p:inputText id="rua" required="true" placeholder="Rua *"
+									value="#{cadastroJuizBean.novoJuiz.enderecoDTO.rua}">
+									<f:ajax event="blur" render="linkGoogleMaps" execute="@this" />
+								</p:inputText>
+								<p:message for="rua" id="msgRua" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="numero" value="Numero" />
+								<p:inputText id="numero" required="true" placeholder="Numero *"
+									value="#{cadastroJuizBean.novoJuiz.enderecoDTO.numero}">
+									<f:ajax event="blur" render="linkGoogleMaps" execute="@this" />
+								</p:inputText>
+								<p:message for="numero" id="msgNumero" />
+							</pm:field>
+
+							<pm:field>
+								<p:outputLabel for="complemento" value="Complemento" />
+								<p:inputText id="complemento" placeholder="Complemento "
+									value="#{cadastroJuizBean.novoJuiz.enderecoDTO.complemento}">
+									<f:ajax event="blur" render="linkGoogleMaps" execute="@this" />
+								</p:inputText>
+								<p:message for="complemento" id="msgComplemento" />
+							</pm:field>
+
+							<pm:field>
+								<p:link id="linkGoogleMaps" value="Ver localização"
+									target="_blank"
+									href="#{cadastroJuizBean.gerarLinkGoogleMaps()}"
+									style="color:blue" styleClass="link-google-maps" />
+							</pm:field>
+						</h:panelGrid>
+					</p:tab>
+
+					<p:tab title="Histórico">
+						<h:panelGrid id="painelCadastroHistorico" columns="1"
+							style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+							<pm:field>
+								<p:outputLabel for="historico" value="Histórico"
+									styleClass="label-historico" />
+								<p:inputTextarea id="historico" placeholder="Histórico"
+									value="#{cadastroJuizBean.novoJuiz.historico}" rows="5"
+									cols="50" />
+								<p:message id="msgHistorico" for="historico" />
+							</pm:field>
+
+							<h:outputText
+								value=" * Inclua campeonatos disputados, títulos e série"
+								style="text-align: center; display: block; margin-top: 10px;"
+								colspan="1" />
+						</h:panelGrid>
+					</p:tab>
+
+					<p:tab title="Foto">
+						<h:panelGrid id="painelUpload" columns="1"
+							styleClass="centralizado"
+							style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+							<pm:field>
+								<div class="upload-container">
+									<p:outputLabel for="foto" value="Envie uma foto:"
+										styleClass="label-upload" />
+									<p:fileUpload id="foto" mode="simple" skinSimple="true"
+										label="Escolher arquivo" class="button-foto" />
+								</div>
+							</pm:field>
+						</h:panelGrid>
+					</p:tab>
+
+					<p:tab title="Raio de atuação">
+						<h:panelGrid columns="1"
+							style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+							<pm:field>
+								<p:outputLabel for="raioAtuacao" value="Raio de atuação" />
+								<p:inputText id="raioAtuacao" required="true"
+									value="#{cadastroJuizBean.novoJuiz.raioAtuacao}"
+									class="inputKM" />
+								<p:slider for="raioAtuacao" />
+								<h:outputText value="KM" class="km-text" />
+								<p:message for="raioAtuacao" id="msgRaioAtuacao" />
+							</pm:field>
+						</h:panelGrid>
+					</p:tab>
+
+					<p:tab title="Modalidade Juiz" id="tabModalidadeJuiz">
+						<h:panelGrid columns="1"
+							style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+							<pm:field>
+								<p:outputLabel for="modalidadeJuiz"
+									value="Selecione a Modalidade: *"
+									style="text-align: center; display: block; width: 100%;" />
+								<p:selectManyCheckbox id="modalidadeJuiz"
+									value="#{cadastroJuizBean.novoJuiz.modalidade}"
+									styleClass="custom-checkbox">
+									<f:selectItems
+										value="#{cadastroJuizBean.getModalidadeOptions()}" />
+									<p:ajax process="@this" update="panelGroupTipoJuiz"
+										event="valueChange" />
+								</p:selectManyCheckbox>
+								<p:message for="modalidadeJuiz" id="msgModalidadeJuiz" />
+							</pm:field>
+						</h:panelGrid>
+
+						<h:panelGroup id="panelGroupTipoJuiz">
+							<h:panelGrid columns="1"
+								style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+								<pm:field>
+									<p:outputLabel for="tipoJuiz"
+										value="Selecione o Tipo de Juiz *"
+										style="text-align: center; display: block; width: 100%;" />
+									<p:selectManyCheckbox id="tipoJuiz"
+										value="#{cadastroJuizBean.novoJuiz.tipoJuizEnum}"
+										styleClass="custom-checkbox-labels-below">
+										<f:selectItems
+											value="#{cadastroJuizBean.getTipoJuizOptions()}" />
+									</p:selectManyCheckbox>
+									<p:message for="tipoJuiz" id="msgTipoJuiz" />
+								</pm:field>
+							</h:panelGrid>
+						</h:panelGroup>
+					</p:tab>
+
+					<p:tab title="Dados bancários">
+						<h:panelGrid columns="1"
+							style="text-align: left; border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+							<pm:field>
+								<p:outputLabel for="tipoChavePix" value="Tipo de Chave Pix"
+									style="text-align: center; display: block; margin-bottom: 10px;" />
+
+								<!-- Alterado para p:selectOneMenu para manter o mesmo padrão do jogador -->
+								<p:selectOneMenu id="tipoChavePix"
+									label="Selecione o Tipo de Chave Pix"
+									value="#{cadastroJuizBean.novoJuiz.dadosBancariosDTO.tipoChavePix}"
+									styleClass="custom-select-pix">
+									<f:selectItems value="#{cadastroJuizBean.getTiposChavePix()}"
+										var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
+								</p:selectOneMenu>
+
+								<p:inputText id="chavePixInput" required="true"
+									placeholder="Chave Pix *"
+									value="#{cadastroJuizBean.novoJuiz.dadosBancariosDTO.chavePix}"
+									styleClass="custom-input" />
+							</pm:field>
+						</h:panelGrid>
+					</p:tab>
+
+				</p:accordionPanel>
+
+				<p:commandButton id="btnCadastroJuiz" value="Salvar"
+					action="#{cadastroJuizBean.editar}" update="@form"
+					styleClass="botao-entar" icon="fa fa-user-plus" />
+
+			</h:panelGrid>
+			
+		
+		</h:form>
+		
+                 		
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,166 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:custom="http://customjsf.consult.inf.br/facelets/taglibs"
+                xmlns:composite="http://java.sun.com/jsf/composite/componentes"
+                template="/templates/template.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="idClube" value="#{cadastroClubeBean.idClube}" />
+        <f:event type="preRenderView"
+                 listener="#{cadastroClubeBean.buscarClubePorId}" />
+    </f:metadata>
+
+    <ui:define name="content">
+
+        <h:form id="formCadastroClube" class="tela-cadastro">
+
+            <h:panelGrid id="painelCadastro" columns="1" 
+                         style="border: none !important; min-width: 100%; max-width: 100%; margin: auto;">
+
+                <!-- Logo centralizada -->
+                <div class="img-login" style="text-align: center; margin-top: 20px;">
+                    <img src="#{request.contextPath}/resources/images/proogle_logo.png"
+                         alt="Logo da Empresa" width="30%" height="30%"
+                         class="h-16 object-contain" />
+                </div>
+
+                <!-- Título da tela -->
+                <p:outputLabel value="Editar Informações do Clube"
+                               style="display: block; text-align: center; font-size: 24px; font-weight: bold; margin: 20px 0;" />
+
+                <!-- Accordion com seções -->
+                <p:accordionPanel activeIndex="-1" style="margin: 0 auto; width: 90%;">
+
+                    <!-- Aba Dados pessoais -->
+                    <p:tab title="Dados pessoais">
+                        <h:panelGrid id="painelCadastroClube" columns="1" style="width: 100%;">
+                            <pm:field>
+                                <p:outputLabel for="cpf" value="CPF" />
+                                <p:inputText id="cpf" disabled="true"
+                                    value="#{cadastroClubeBean.novoClube.cpf}" />
+                            </pm:field>
+
+                            <pm:field>
+                                <p:outputLabel for="nomeResponsavel" value="Nome do responsável" />
+                                <p:inputText id="nomeResponsavel"
+                                    value="#{cadastroClubeBean.novoClube.responsavel}" />
+                            </pm:field>
+
+                            <pm:field>
+                                <p:outputLabel for="cnpj" value="CNPJ do clube" />
+                                <p:inputText id="cnpj" 
+                                    value="#{cadastroClubeBean.novoClube.cnpj}" />
+                            </pm:field>
+
+                            <pm:field>
+                                <p:outputLabel for="nome" value="Nome do clube" />
+                                <p:inputText id="nome"
+                                    value="#{cadastroClubeBean.novoClube.nome}" />
+                            </pm:field>
+
+                            <pm:field>
+                                <p:outputLabel for="email" value="Email" />
+                                <p:inputText id="email"
+                                    value="#{cadastroClubeBean.novoClube.email}" />
+                            </pm:field>
+
+                            <pm:field>
+                                <p:outputLabel for="contato" value="Contato" />
+                                <p:inputMask id="contato" required="true" mask="(99) 99999-9999"
+                                    value="#{cadastroClubeBean.novoClube.contato}" />
+                            </pm:field>
+                        </h:panelGrid>
+                    </p:tab>
+
+                    <!-- Aba Endereço -->
+                    <p:tab title="Endereço">
+                        <h:panelGrid id="painelCadastroEndereco" columns="1" style="width: 100%;">
+                            <pm:field>
+                                <p:outputLabel for="cep" value="CEP" />
+                                <p:inputMask id="cep" mask="99999-999"
+                                    value="#{cadastroClubeBean.novoClube.enderecoDTO.cep}" />
+                            </pm:field>
+
+                            <pm:field>
+                                <p:outputLabel for="estado" value="Estado" />
+                                <p:selectOneMenu id="estado"
+                                    value="#{cadastroClubeBean.novoClube.enderecoDTO.estado}" styleClass="custom-select">
+                                    <f:selectItem itemLabel="SP" itemValue="SP" />
+                                </p:selectOneMenu>
+                            </pm:field>
+
+                            <pm:field>
+                                <p:outputLabel for="cidade" value="Cidade" />
+                                <p:inputText id="cidade"
+                                    value="#{cadastroClubeBean.novoClube.enderecoDTO.cidade}" />
+                            </pm:field>
+
+                            <pm:field>
+                                <p:outputLabel for="bairro" value="Bairro" />
+                                <p:inputText id="bairro"
+                                    value="#{cadastroClubeBean.novoClube.enderecoDTO.bairro}" />
+                            </pm:field>
+
+                            <pm:field>
+                                <p:outputLabel for="rua" value="Rua" />
+                                <p:inputText id="rua"
+                                    value="#{cadastroClubeBean.novoClube.enderecoDTO.rua}" />
+                            </pm:field>
+
+                            <pm:field>
+                                <p:outputLabel for="numero" value="Número" />
+                                <p:inputText id="numero"
+                                    value="#{cadastroClubeBean.novoClube.enderecoDTO.numero}" />
+                            </pm:field>
+
+                            <pm:field>
+                                <p:outputLabel for="complemento" value="Complemento" />
+                                <p:inputText id="complemento"
+                                    value="#{cadastroClubeBean.novoClube.enderecoDTO.complemento}" />
+                            </pm:field>
+                        </h:panelGrid>
+                    </p:tab>
+
+                    <!-- Aba Histórico -->
+                    <p:tab title="Histórico">
+                        <h:panelGrid id="painelCadastroHistorico" columns="1" style="width: 100%;">
+                            <pm:field>
+                                <p:outputLabel for="historico" value="Histórico" />
+                                <p:inputTextarea id="historico"
+                                    value="#{cadastroClubeBean.novoClube.historico}" rows="5"
+                                    cols="50" />
+                            </pm:field>
+                        </h:panelGrid>
+                    </p:tab>
+
+                    <!-- Aba Foto -->
+                    <p:tab title="Foto">
+                        <h:panelGrid id="painelUpload" columns="1" style="width: 100%; text-align:center;">
+                            <pm:field>
+                                <p:fileUpload id="foto" mode="simple" skinSimple="true"
+                                              label="Escolher arquivo" class="button-foto" />
+                            </pm:field>
+                        </h:panelGrid>
+                    </p:tab>
+
+                </p:accordionPanel>
+
+                <p:commandButton id="btnCadastroClube" value="Salvar alterações"
+                                 action="#{cadastroClubeBean.editar}" update="@form"
+                                 styleClass="botao-entrar"
+                                 style="border-radius: 10px; margin-top: 20px; width: 100%; font-size: 16px; font-weight: bold;"
+                                 icon="fa fa-save" />
+
+            </h:panelGrid>
+
+        </h:form>
+
+                 
+                 
+    </ui:define>
+</ui:composition>
